@@ -6,39 +6,31 @@
 5. Review the tasks following the rules
     - [ ] No compilation errors or warnings (-Wall)
     - [ ] Security: no global variables, all data is private
-6. Add unit tests & test the program
+    - [ ] Make sure there is enough input data in "tastatura.txt" anytime
+    - [ ] Check all the IDE's indications
+    - [ ] Change the fin to cin??
+6. Add unit tests & test the program (pay attention to the mcmarius's last commit regarding the tests)
 7. Add tag to the final commit
 8. Push the branch to GitHub
-9. Create PR & demand code review
+9. Create PR & demand code review (bonus points remark)
 10. Push the branch to the main one
 
 ## Tasks
-### My tasks
-- **Define the basic app functionalities in the project documentation & commit**
-- Refactor the prototype plan
-- Implement the created structure (spread into multiple tasks) respecting the extras and the given tasks (and abstract the content ideas handling in the prototype plan) ([Third party libraries](https://github.com/fffaraz/awesome-cpp?tab=readme-ov-file))
-- Extras: const and &, listă inițializare constructori, pseudo-constructors: definitions and exercises, var(300), diamond inheritance, namespaces, write in multiple files (.h and .cpp files), value initialisation, dynamic memory allocation, resolution operator and external methods, [others](https://github.com/Ionnier/poo/blob/main/labs/L02/README.md)
+- [x] Implement a simple working project structure
+- [x] Create buy ticket functionality
+- [x] Apply discount on bought ticket
+- [ ] Complete the given tasks
+- [ ] Add tests for the created structure
+- [ ] Improve seats choosing functionality
+- Commit the changes
+- [ ] Implement Transportation logic
+- [ ] Integrate Journey logic
+- [ ] Implement a basic GUI using third party libraries (ask for advice on the library)
+- [ ] Integrate time dimension (and periodicity) in the project
+- [ ] Find the optimal path(s) between 2 cities depending on a given criteria (time, price, combination of these 2, maybe list of paths that respect a threshold?)
+- [ ] Integrate SystemAdmin functionalities
+- Extras: const and &, listă inițializare constructori, return *this, pseudo-constructors: definitions and exercises, var(300), diamond inheritance, namespaces, value initialisation, [others](https://github.com/Ionnier/poo/blob/main/labs/L02/README.md)
 - Hand in the project (check the indications)
 - Project recap and presentation
+- Enrich the project & add to resume
 
-### Given tasks
-- [ ] definirea a minim **2-3 clase** care sa interactioneze in cadrul temei alese (fie prin compunere, agregare sau doar sa apeleze metodele celeilalte intr-un mod logic) (5p)
-    - pentru o clasă:
-        - [ ] constructori de inițializare
-        - [ ] constructor supraîncărcat
-        - [ ] constructori de copiere
-        - [ ] `operator=` de copiere
-        - [ ] destructor
-        - [ ] `operator<<` pentru afișare (std::ostream)
-        - [ ] `operator>>` pentru citire (std::istream)
-        - [ ] alt operator supraîncărcat ca funcție membră
-        - [ ] alt operator supraîncărcat ca funcție non-membră
-    - pentru celelalte clase se va defini doar ce e nevoie
-- [ ] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe (3p)
-- nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
-- [ ] scenariu de utilizare a claselor definite (1p):
-    - crearea de obiecte și apelarea tuturor funcțiilor membru publice în main
-    - vor fi adăugate în fișierul `tastatura.txt` DOAR exemple de date de intrare de la tastatură (dacă există); dacă aveți nevoie de date din fișiere, creați alte fișiere separat
-- [ ] opțiune pentru citirea și afișarea a n obiecte (1p)
-- [ ] funcționalitatea creată să folosească metode ale obiectului generic
-- [ ] ar fi bine ca relația de agregare să fie făcută cu un obiect general în stilul celor de mai sus ^
