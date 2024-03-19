@@ -7,19 +7,21 @@
 class Transportation {
     int totalSeats, speed;
     std::string type;
-    bool *occupiedSeats;
+    std::vector<bool> occupiedSeats;
     double price;
 public:
     Transportation() {
         this->totalSeats = 0;
         this->speed = 0;
         this->price = 0.0;
-        this->occupiedSeats = new bool[0];
+        this->occupiedSeats = {};
     };
 
-    [[maybe_unused]] Transportation(int &, double &, int &, std::string &);
+    [[maybe_unused]] Transportation(const int &, const double &, const int &, const std::string &);
 
-    void occupySeats(std::vector<int> &);
+    Transportation(const Transportation &);
+
+    void occupySeats(const std::vector<int> &);
 
     [[nodiscard]] std::vector<int> showAllFreeSeats() const;
 

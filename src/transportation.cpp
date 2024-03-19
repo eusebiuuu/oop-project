@@ -1,15 +1,15 @@
 #include "transportation.h"
 #include "iostream"
 
-[[maybe_unused]] Transportation::Transportation(int &totalSeats, double &price, int &speed, std::string &type) {
-    this->occupiedSeats = new bool[totalSeats + 1];
+[[maybe_unused]] Transportation::Transportation(const int &totalSeats, const double &price, const int &speed, const std::string &type) {
+    this->occupiedSeats = std::vector<bool>(totalSeats);
     this->totalSeats = totalSeats;
     this->type = type;
     this->price = price;
     this->speed = speed;
 }
 
-void Transportation::occupySeats(std::vector<int> &seatsToBeOccupied) {
+void Transportation::occupySeats(const std::vector<int> &seatsToBeOccupied) {
     for (int x : seatsToBeOccupied) {
         this->occupiedSeats[x] = true;
     }
@@ -37,16 +37,27 @@ double Transportation::getPrice() const {
 std::istream &operator>>(std::istream &in, Transportation &transportation) {
     in >> transportation.totalSeats >> transportation.type;
     in >> transportation.price >> transportation.speed;
-    delete[] transportation.occupiedSeats;
-    transportation.occupiedSeats = new bool[transportation.totalSeats];
+    transportation.occupiedSeats.clear();
+    transportation.occupiedSeats = std::vector<bool>(transportation.totalSeats);
     // std::cout << sizeof transportation.occupiedSeats << '\n';
     return in;
 }
 
 Transportation::~Transportation() {
-    // delete[] occupiedSeats;
+    occupiedSeats.clear();
     totalSeats = 0;
     type.clear();
     price = 0.0;
     speed = 0;
+}
+
+Transportation::Transportation(const Transportation &transport) {
+    type = transport.type;
+    totalSeats = transport.totalSeats;
+    speed = transport.speed;
+    occupiedSeats = std::vector<bool>(totalSeats);
+    for (int i = 0; i < totalSeats; ++i) {
+        occupiedSeats[i] = transport.occupiedSeats[i];
+    }
+    price = transport.price;
 }

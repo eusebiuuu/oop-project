@@ -6,7 +6,6 @@
 #include "route.h"
 #include "world.h"
 using namespace std;
-int const MAX_ID = 1000;
 
 int main() {
     ifstream fin;
@@ -30,7 +29,6 @@ int main() {
     }
     int routesCount;
     fin >> routesCount;
-    vector<Route> routes;
     // read n objects
     for (int i = 0; i < routesCount; ++i) {
         Transportation transport;
@@ -43,9 +41,10 @@ int main() {
     Customer customer1;
     fin >> customer1;
     Customer customer2("2938", "RomicaIon", "elder");
-    Ticket gotTicket = customer1.buyTicket(stations[0], stations[1], world.getRoutes()[stations[0].getName()]);
-    cout << '\n' << gotTicket << '\n';
-    const Ticket& copyTicket(gotTicket);
+    Ticket ticket1 = customer1.buyTicket(stations[0], stations[1], world.getRoutes()[stations[0].getName()]);
+    Ticket ticket2 = customer2.buyTicket(stations[0], stations[2], world.getRoutes()[stations[0].getName()]);
+    cout << '\n' << ticket1 << '\n' << ticket2 << '\n';
+    const Ticket& copyTicket(ticket1);
     cout << '\n' << copyTicket;
     fin.close();
     return 0;

@@ -1,7 +1,7 @@
 #include "station.h"
 #include "iostream"
 
-Station::Station(std::string &name) {
+Station::Station(const std::string &name) {
     this->name = name;
 }
 
@@ -14,7 +14,7 @@ std::istream &operator>>(std::istream &in, Station &station) {
     return in;
 }
 
-std::ostream &operator<<(std::ostream &out, Station &station) {
+std::ostream &operator<<(std::ostream &out, const Station &station) {
     out << station.name << '\n';
     return out;
 }

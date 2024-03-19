@@ -26,13 +26,7 @@ std::ostream &operator<<(std::ostream &out, const Ticket &ticket) {
 }
 
 // copy constructor
-Ticket::Ticket(const Ticket &ticket) {
-    ticketID = ticket.ticketID;
-    destination = ticket.destination;
-    origin = ticket.origin;
-    seats = ticket.seats;
-    totalPrice = ticket.totalPrice;
-}
+Ticket::Ticket(const Ticket &ticket) = default;
 
 Ticket Ticket::operator*=(double discount) {
     totalPrice *= discount / 100.0;
