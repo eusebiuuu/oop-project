@@ -13,22 +13,6 @@ double Ticket::getTotalPrice() const {
     return totalPrice;
 }
 
-const std::vector<int> &Ticket::getSeats() const {
-    return seats;
-}
-
-const Station &Ticket::getOrigin() const {
-    return origin;
-}
-
-const Station &Ticket::getDestination() const {
-    return destination;
-}
-
-const int &Ticket::getTicketId() const {
-    return ticketID;
-}
-
 std::ostream &operator<<(std::ostream &out, const Ticket &ticket) {
     out << "Ticket ID: " << ticket.ticketID << '\n';
     out << "Start: " << ticket.origin.getName() << '\n';

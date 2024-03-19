@@ -18,14 +18,6 @@ public:
 
     [[nodiscard]] double getTotalPrice() const;
 
-    [[nodiscard]] const std::vector<int> &getSeats() const;
-
-    [[nodiscard]] const Station &getOrigin() const;
-
-    [[nodiscard]] const Station &getDestination() const;
-
-    [[nodiscard]] const int &getTicketId() const;
-
     // print operator
     friend std::ostream& operator<<(std::ostream &, const Ticket &);
 

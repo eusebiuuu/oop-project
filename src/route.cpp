@@ -16,10 +16,6 @@ Route::Route(int &length, Station &origin, Station &destination, Transportation 
     this->routeID = (int) (rand() % 1000);
 }
 
-const Station &Route::getDestination() const {
-    return destination;
-}
-
 std::ostream& operator<<(std::ostream &out, const Route &route) {
     out << "Route ID: " << route.routeID << '\n';
     out << "Start: " << route.origin.getName() << '\n';
@@ -28,18 +24,6 @@ std::ostream& operator<<(std::ostream &out, const Route &route) {
     out << "Duration (in min): " << route.duration << '\n';
     out << "Price: " << route.price << '\n';
     return out;
-}
-
-int Route::getRouteId() const {
-    return routeID;
-}
-
-int Route::getDuration() const {
-    return duration;
-}
-
-int Route::getLength() const {
-    return length;
 }
 
 double Route::getPrice() const {

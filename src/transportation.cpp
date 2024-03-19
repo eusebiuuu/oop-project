@@ -1,7 +1,7 @@
 #include "transportation.h"
 #include "iostream"
 
-Transportation::Transportation(int &totalSeats, double &price, int &speed, std::string &type) {
+[[maybe_unused]] Transportation::Transportation(int &totalSeats, double &price, int &speed, std::string &type) {
     this->occupiedSeats = new bool[totalSeats + 1];
     this->totalSeats = totalSeats;
     this->type = type;
@@ -32,18 +32,6 @@ int Transportation::getSpeed() const {
 
 double Transportation::getPrice() const {
     return this->price;
-}
-
-int Transportation::getTotalSeats() const {
-    return totalSeats;
-}
-
-const std::string &Transportation::getType() const {
-    return type;
-}
-
-bool* Transportation::getOccupiedSeats() const {
-    return occupiedSeats;
 }
 
 std::istream &operator>>(std::istream &in, Transportation &transportation) {

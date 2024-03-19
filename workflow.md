@@ -19,7 +19,8 @@
 - [x] Implement a simple working project structure
 - [x] Create buy ticket functionality
 - [x] Apply discount on bought ticket
-- [ ] Complete the given tasks
+- [x] Complete the given tasks
+- [ ] Solve the push problems
 - [ ] Add tests for the created structure
 - [ ] Improve seats choosing functionality
 - Commit the changes

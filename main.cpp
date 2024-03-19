@@ -6,6 +6,7 @@
 #include "route.h"
 #include "world.h"
 using namespace std;
+int const MAX_ID = 1000;
 
 int main() {
     ifstream fin;

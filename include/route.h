@@ -15,15 +15,7 @@ public:
 
     Route() = default;
 
-    [[nodiscard]] const Station &getDestination() const;
-
     friend std::ostream& operator<<(std::ostream &, const Route &);
-
-    [[nodiscard]] int getRouteId() const;
-
-    [[nodiscard]] int getDuration() const;
-
-    [[nodiscard]] int getLength() const;
 
     [[nodiscard]] double getPrice() const;
 

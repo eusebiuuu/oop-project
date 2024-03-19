@@ -17,7 +17,7 @@ public:
         this->occupiedSeats = new bool[0];
     };
 
-    Transportation(int &, double &, int &, std::string &);
+    [[maybe_unused]] Transportation(int &, double &, int &, std::string &);
 
     void occupySeats(std::vector<int> &);
 
@@ -26,12 +26,6 @@ public:
     [[nodiscard]] int getSpeed() const;
 
     [[nodiscard]] double getPrice() const;
-
-    [[nodiscard]] int getTotalSeats() const;
-
-    [[nodiscard]] const std::string &getType() const;
-
-    [[nodiscard]] bool* getOccupiedSeats() const;
 
     friend std::istream& operator>>(std::istream &, Transportation &);
 
