@@ -20,11 +20,11 @@
 - [x] Create buy ticket functionality
 - [x] Apply discount on bought ticket
 - [x] Complete the given tasks
-- [ ] Solve the push problems
+- [ ] Solve the GitHub Actions problems
 - [ ] Add tests for the created structure
-- [ ] Improve seats choosing functionality
 - Commit the changes
 - [ ] Implement Transportation logic
+- [ ] Improve seats choosing functionality
 - [ ] Integrate Journey logic
 - [ ] Implement a basic GUI using third party libraries (ask for advice on the library)
 - [ ] Integrate time dimension (and periodicity) in the project
