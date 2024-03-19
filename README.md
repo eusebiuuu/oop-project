@@ -44,6 +44,7 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
   * Choose a route from a list
   * Choose which seats to occupy
   * Apply discount on ticket
+  * Possible routes are sorted by default based on price
 
 ### Given tasks
 - [x] definirea a minim **2-3 clase** care sa interactioneze in cadrul temei alese (fie prin compunere, agregare sau doar sa apeleze metodele celeilalte intr-un mod logic) (5p)

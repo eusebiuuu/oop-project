@@ -16,22 +16,22 @@
 10. Push the branch to the main one
 
 ## Tasks
+#### Part 1
 - [x] Implement a simple working project structure
 - [x] Create buy ticket functionality
 - [x] Apply discount on bought ticket
 - [x] Complete the given tasks
-- [ ] Solve the GitHub Actions problems
+- [ ] Solve the pipeline checks problems
 - [ ] Add tests for the created structure
-- Commit the changes
-- [ ] Implement Transportation logic
+#### Part 2
+- [ ] Implement Transportation logic (with diamond inheritance)
 - [ ] Improve seats choosing functionality
 - [ ] Integrate Journey logic
 - [ ] Implement a basic GUI using third party libraries (ask for advice on the library)
 - [ ] Integrate time dimension (and periodicity) in the project
 - [ ] Find the optimal path(s) between 2 cities depending on a given criteria (time, price, combination of these 2, maybe list of paths that respect a threshold?)
 - [ ] Integrate SystemAdmin functionalities
-- Extras: const and &, listă inițializare constructori, return *this, pseudo-constructors: definitions and exercises, var(300), diamond inheritance, namespaces, value initialisation, [others](https://github.com/Ionnier/poo/blob/main/labs/L02/README.md)
 - Hand in the project (check the indications)
-- Project recap and presentation
+- Project recap and presentation preparation
 - Enrich the project & add to resume
 
