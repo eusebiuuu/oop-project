@@ -19,7 +19,7 @@ public:
 
     [[maybe_unused]] Transportation(const int &, const double &, const int &, const std::string &);
 
-    Transportation(const Transportation &);
+    // Transportation(const Transportation &);
 
     void occupySeats(const std::vector<int> &);
 

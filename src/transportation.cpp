@@ -51,6 +51,6 @@ Transportation::~Transportation() {
     speed = 0;
 }
 
-Transportation::Transportation(const Transportation &transport): totalSeats(transport.totalSeats),
-speed(transport.speed), type(transport.type), occupiedSeats(std::vector<bool> (std::begin(transport.occupiedSeats), std::end(transport.occupiedSeats))),
-price(transport.price){}
+// Transportation::Transportation(const Transportation &transport): totalSeats(transport.totalSeats),
+// speed(transport.speed), type(transport.type), occupiedSeats(std::vector<bool> (std::begin(transport.occupiedSeats), std::end(transport.occupiedSeats))),
+// price(transport.price){}
