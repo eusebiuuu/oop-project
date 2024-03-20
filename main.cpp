@@ -16,11 +16,11 @@ int main() {
     }
     World world;
     int statCount;
-    fin >> statCount;
+    cin >> statCount;
     vector<Station> stations;
     for (int i = 0; i < statCount; ++i) {
         Station stat;
-        fin >> stat;
+        cin >> stat;
         stations.push_back(stat);
     }
     // print n objects
@@ -28,18 +28,18 @@ int main() {
         cout << stations[i];
     }
     int routesCount;
-    fin >> routesCount;
+    cin >> routesCount;
     // read n objects
     for (int i = 0; i < routesCount; ++i) {
         Transportation transport;
-        fin >> transport;
+        cin >> transport;
         int length, idxStat1, idxStat2;
-        fin >> length >> idxStat1 >> idxStat2;
+        cin >> length >> idxStat1 >> idxStat2;
         Route currRoute(length, stations[idxStat1 - 1], stations[idxStat2 - 1], transport);
         world.addRoute(currRoute);
     }
     Customer customer1;
-    fin >> customer1;
+    cin >> customer1;
     Customer customer2("2938", "RomicaIon", "elder");
     Ticket ticket1 = customer1.buyTicket(stations[0], stations[1], world.getRoutes()[stations[0].getName()]);
     Ticket ticket2 = customer2.buyTicket(stations[0], stations[2], world.getRoutes()[stations[0].getName()]);
