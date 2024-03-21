@@ -25,6 +25,7 @@
 - [x] Create buy ticket functionality
 - [x] Apply discount on bought ticket
 - [x] Complete the given tasks
+- [ ] Refactor the workflow
 - [ ] Solve the pipeline problems
 - [ ] Add tests for the created structure
 - [ ] Enrich the project description

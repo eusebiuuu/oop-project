@@ -8,12 +8,12 @@
 using namespace std;
 
 int main() {
-    ifstream fin;
-    fin.open("/home/eusebiuu/CLionProjects/oop-project/tastatura.txt");
-    if (fin.fail()) {
-        cout << "Error\n";
-        return 1;
-    }
+    // ifstream fin;
+    // fin.open("/home/eusebiuu/CLionProjects/oop-project/tastatura.txt");
+    // if (fin.fail()) {
+    //     cout << "Error\n";
+    //     return 1;
+    // }
     World world;
     int statCount;
     cin >> statCount;
@@ -46,6 +46,6 @@ int main() {
     cout << '\n' << ticket1 << '\n' << ticket2 << '\n';
     const Ticket& copyTicket(ticket1);
     cout << '\n' << copyTicket;
-    fin.close();
+    // fin.close();
     return 0;
 }
