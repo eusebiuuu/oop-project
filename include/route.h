@@ -23,8 +23,6 @@ public:
 
     [[nodiscard]] const Station &getOrigin() const;
 
-    [[nodiscard]] const Station &getDestination() const;
-
     friend std::istream& operator>>(std::istream &, Route &);
 
     friend bool operator<(const Route&, const Route &);

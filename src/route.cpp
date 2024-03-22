@@ -38,10 +38,6 @@ const Station &Route::getOrigin() const {
     return origin;
 }
 
-const Station &Route::getDestination() const {
-    return destination;
-}
-
 std::istream &operator>>(std::istream &in, Route &route) {
     in >> route.length >> route.origin >> route.destination >> route.transport;
     route.price = route.length * route.transport.getPrice();
