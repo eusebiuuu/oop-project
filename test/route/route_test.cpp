@@ -10,5 +10,6 @@ TEST(MySuitName, MyTestName) {
     Route route2(routeLen, station1, station2, transport);
     EXPECT_EQ(route.getPrice(), 0.0);
     EXPECT_EQ(route2.getOrigin().getName(), "Station 1");
+    EXPECT_EQ(route2.getDestination().getName(), "Station 2");
     EXPECT_EQ(route2.getTransport().getSpeed(), 70);
 }
