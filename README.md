@@ -2,10 +2,13 @@
 Welcome to "Ticketist", the app to rule all the ticket management systems. I have decided to create an app with this theme, because I am a huge fan of public transportation and I find it a very customisable and challenging theme to implement. Also, I hate the concept of personal car as a transportation mean.
 
 ### Objects
+* World
+  - this represents the oriented graph obtained with stations and routes
+  - needed for simplifying the structure and future logic
 * Station
-  - this represents both a possible departure or a possible arrival for a journey
-  - name
-  - neighbouring stations: outward, inward
+  - these represent the nodes in the graph
+  - can be a departure or an arrival for a route
+  - props (till now): name
 * Journey (to be implemented)
   - this is the path between the given stations capable of using more than 1 route
   - price
@@ -13,7 +16,8 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
   - totalTime
 * Route
   - routeID
-  - transportation type
+  - this constitutes a directed edge from the graph
+  - transportation
   - duration
   - start & finish
   - price
@@ -22,20 +26,17 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
   - seat(s)
   - ticketID
   - total price
-  - get information
-  - update ticket
-  - cancel booking
-  - start station, end station
-* Transportation (to be implemented)
-  - type: train, bus, plane
+  - start station
+  - end station
+* Transportation
+  - type: train, bus, plane (only them - to be implemented)
   - cost (price per km)
   - average speed (km per hour)
-  - available seats (later: sit - premium, sit - normal, stand)
+  - available seats (to be implemented: sit - premium, sit - normal, stand)
 * Customer
   - type: single, family, elder, student, scholar group
   - citizenID
   - bought tickets
-  - buy ticket
   - full name
 
 ### Major functionalities

@@ -12,7 +12,7 @@
 6. Testing
     - add unit tests
 7. Commit the changes & add tags & push the branch to GitHub
-8. Create PR & demand code review
+8. Create PR & demand code review & check the indications
    - observations about the given tasks
    - mention the solved exercises
 9. Merge the branch to main
@@ -24,11 +24,13 @@
 - [x] Apply discount on bought ticket
 - [x] Complete the given tasks
 - [x] Solve the pipeline problems
-- [ ] Add tests for the created structure
+- [x] Add tests for the created structure
 - [ ] Enrich the project description
 #### Part 2
-- [ ] Implement Transportation logic (with diamond inheritance)
-- [ ] Improve seats choosing functionality
+- [ ] Implement Transportation logic
+  - diamond inheritance
+  - types of seats
+  - Improve seats choosing functionality
 - [ ] Implement abstract classes
 - [ ] Exceptions handling (try, catch, throw)
 - [ ] Integrate Journey logic
@@ -36,7 +38,5 @@
 - [ ] Integrate time dimension (and periodicity) in the project
 - [ ] Find the optimal path(s) between 2 cities depending on a given criteria (time, price, combination of these 2, maybe list of paths that respect a threshold?)
 - [ ] Integrate SystemAdmin functionalities
-- Hand in the project (check the indications)
-- Project recap and presentation preparation
 - Enrich the project & add to resume
 
