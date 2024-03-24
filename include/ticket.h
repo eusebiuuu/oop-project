@@ -22,6 +22,8 @@ public:
     friend std::ostream& operator<<(std::ostream &, const Ticket &);
 
     Ticket operator*=(double discount);
+
+    const Station &getOrigin() const;
 };
 
 #endif //OOP_TICKET_H

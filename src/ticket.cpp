@@ -32,3 +32,7 @@ Ticket Ticket::operator*=(double discount) {
     totalPrice *= discount / 100.0;
     return *this;
 }
+
+const Station &Ticket::getOrigin() const {
+    return origin;
+}

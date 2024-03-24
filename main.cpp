@@ -46,6 +46,7 @@ int main() {
     cout << '\n' << ticket1 << '\n' << ticket2 << '\n';
     const Ticket& copyTicket(ticket1);
     cout << '\n' << copyTicket;
+    cout << copyTicket.getOrigin().getName() << '\n';
     // fin.close();
     return 0;
 }
