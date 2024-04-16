@@ -6,9 +6,10 @@
 
 class Transportation {
     int totalSeats, speed;
-    std::string type;
     std::vector<bool> occupiedSeats;
     double price;
+protected:
+    std::string model;
 public:
     Transportation() {
         this->totalSeats = 0;
@@ -17,9 +18,13 @@ public:
         this->occupiedSeats = {};
     };
 
-    [[maybe_unused]] Transportation(const int &, const double &, const int &, const std::string &);
+    [[maybe_unused]] virtual std::string getModel() = 0;
 
-    // Transportation(const Transportation &);
+    virtual void read(std::istream &) = 0;
+
+    virtual void print(std::ostream &) = 0;
+
+    [[maybe_unused]] Transportation(const int &, const double &, const int &);
 
     void occupySeats(const std::vector<int> &);
 
@@ -31,7 +36,9 @@ public:
 
     friend std::istream& operator>>(std::istream &, Transportation &);
 
-    ~Transportation();
+    friend std::ostream& operator<<(std::ostream &, Transportation &);
+
+    virtual ~Transportation();
 };
 
 #endif //OOP_TRANSPORTATION_H

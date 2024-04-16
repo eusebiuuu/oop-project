@@ -1,10 +1,9 @@
 #include "transportation.h"
 #include "iostream"
 
-[[maybe_unused]] Transportation::Transportation(const int &totalSeats, const double &price, const int &speed, const std::string &type) {
+[[maybe_unused]] Transportation::Transportation(const int &totalSeats, const double &price, const int &speed) {
     this->occupiedSeats = std::vector<bool>(totalSeats);
     this->totalSeats = totalSeats;
-    this->type = type;
     this->price = price;
     this->speed = speed;
 }
@@ -35,22 +34,20 @@ double Transportation::getPrice() const {
 }
 
 std::istream &operator>>(std::istream &in, Transportation &transportation) {
-    in >> transportation.totalSeats >> transportation.type;
-    in >> transportation.price >> transportation.speed;
     transportation.occupiedSeats.clear();
     transportation.occupiedSeats = std::vector<bool>(transportation.totalSeats);
-    // std::cout << sizeof transportation.occupiedSeats << '\n';
+    transportation.read(in);
     return in;
+}
+
+std::ostream &operator<<(std::ostream &out, Transportation &transportation) {
+    transportation.print(out);
+    return out;
 }
 
 Transportation::~Transportation() {
     occupiedSeats.clear();
     totalSeats = 0;
-    type.clear();
     price = 0.0;
     speed = 0;
 }
-
-// Transportation::Transportation(const Transportation &transport): totalSeats(transport.totalSeats),
-// speed(transport.speed), type(transport.type), occupiedSeats(std::vector<bool> (std::begin(transport.occupiedSeats), std::end(transport.occupiedSeats))),
-// price(transport.price){}

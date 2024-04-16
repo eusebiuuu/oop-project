@@ -1,12 +1,14 @@
 #include "ticket.h"
 #include "iostream"
 
+int Ticket::ticketsCount = 0;
+
 Ticket::Ticket(Station &origin, Station &dest, double &price, std::vector<int> &seats) {
     this->origin = origin;
     this->destination = dest;
     this->seats = seats;
     this->totalPrice = price;
-    this->ticketID = (int) (rand() % 1000);
+    this->ticketID = Ticket::ticketsCount++;
 }
 
 double Ticket::getTotalPrice() const {
@@ -24,9 +26,6 @@ std::ostream &operator<<(std::ostream &out, const Ticket &ticket) {
     out << "\nTotal price: " << ticket.totalPrice << '\n';
     return out;
 }
-
-// copy constructor
-Ticket::Ticket(const Ticket &ticket) = default;
 
 Ticket Ticket::operator*=(double discount) {
     totalPrice *= discount / 100.0;

@@ -4,15 +4,16 @@
 #include <string>
 #include "ticket.h"
 #include "route.h"
+#include "world.h"
 
 class Customer {
-    std::string type;
+protected:
     std::string citizenID;
     std::vector<Ticket> purchasedTickets;
     std::string fullName;
 public:
     // overloading constructor
-    Customer(std::string, std::string, std::string);
+    Customer(std::string, std::string);
 
     // initialisation constructor
     Customer() = default;
@@ -20,11 +21,17 @@ public:
     // read operator
     friend std::istream& operator>>(std::istream &, Customer &);
 
+    virtual void read(std::istream &);
+
     Customer& operator=(const Customer &);
 
-    void applyDiscount(Ticket &);
+    std::vector<Route> getSuitableRoutes(Station &stat1, Station &stat2, World&, const std::vector<std::string>&, int);
 
-    Ticket buyTicket(Station &, Station &, const std::vector<Route> &, int = 1);
+    Ticket buyTicket(Station &, Station &, World&, const std::vector<std::string>&, int = 1);
+
+    virtual ~Customer() = default;
+
+    [[nodiscard]] const std::string &getCitizenId() const;
 };
 
 #endif //OOP_CUSTOMER_H

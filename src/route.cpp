@@ -1,19 +1,19 @@
 #include "route.h"
-#include "chrono"
-#include "random"
 #include "iostream"
+#include "cmath"
 
-std::mt19937
-rnd(std::chrono::steady_clock::now().time_since_epoch().count());
+int const MIN_IN_HOUR = 60, HOURS_IN_DAY = 24;
 
-Route::Route(int &length, Station &origin, Station &destination, Transportation &transport) {
+int Route::routeCount = 0;
+
+Route::Route(int &length, Station &origin, Station &destination, Transportation* transport) {
     this->length = length;
     this->origin = origin;
     this->destination = destination;
-    this->duration = length / transport.getSpeed();
-    this->price = length * transport.getPrice();
+    this->duration = (int) std::ceil((1.0 * length / transport->getSpeed()) * MIN_IN_HOUR);
+    this->price = length * transport->getPrice();
     this->transport = transport;
-    this->routeID = (int) (rand() % 1000);
+    this->routeID = Route::routeCount++;
 }
 
 std::ostream& operator<<(std::ostream &out, const Route &route) {
@@ -30,7 +30,7 @@ double Route::getPrice() const {
     return price;
 }
 
-Transportation &Route::getTransport() {
+Transportation* Route::getTransport() {
     return this->transport;
 }
 
@@ -43,13 +43,16 @@ const Station &Route::getDestination() const {
 }
 
 std::istream &operator>>(std::istream &in, Route &route) {
-    in >> route.length >> route.origin >> route.destination >> route.transport;
-    route.price = route.length * route.transport.getPrice();
-    route.duration = (int) (route.length / route.transport.getSpeed());
-    route.routeID = (int) (rnd() % 1000);
+    in >> route.length >> route.origin >> route.destination >> *route.transport;
+    route.price = route.length * route.transport->getPrice();
+    route.duration = (int) std::ceil((route.length / route.transport->getSpeed()) * MIN_IN_HOUR);
+    route.routeID = Route::routeCount++;
     return in;
 }
 
 bool operator<(const Route &route1, const Route &route2) {
     return route1.price < route2.price;
 }
+
+// downcast 2 + print n objects
+

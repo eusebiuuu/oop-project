@@ -1,12 +1,15 @@
 ## Workflow
 1. Requirements update check: [source 1](https://github.com/Ionnier/poo/tree/main) & [source 2](https://github.com/Ionnier/oop-template)
-2. Set the tasks list
-3. Create a new branch & solve the tasks
+2. Set the tasks list & incorporate the given tasks
+3. Solve the tasks (create new branch)
 4. Review the project following the rules
     - No compilation errors or warnings (-Wall)
+    - Use const everywhere
     - Security: no global variables, all data is private
     - Make sure there is enough input data in "tastatura.txt" anytime
     - Check all the IDE's indications
+    - Add try & catch blocks
+    - Destructors must be declared virtually
     - Remove the fin functionality
 5. Project documentation upgrade
 6. Testing
@@ -25,18 +28,23 @@
 - [x] Complete the given tasks
 - [x] Solve the pipeline problems
 - [x] Add tests for the created structure
-- [ ] Enrich the project description
+- [x] Enrich the project description
 #### Part 2
-- [ ] Implement Transportation logic
-  - diamond inheritance
-  - types of seats
-  - Improve seats choosing functionality
-- [ ] Implement abstract classes
-- [ ] Exceptions handling (try, catch, throw)
-- [ ] Integrate Journey logic
+- [ ] Incorporate the given tasks
+- [ ] Call the destructors (find real use cases)
+- [ ] Add more tests: simple tests, [mock tests](https://github.com/Ionnier/poo/tree/main/proiect/P03#mocking)
+- [ ] Restructure the project logic (journeys, time etc.) & incorporate randomness
+- [ ] Integrate time component
+- [ ] Transportation logic improvements
+- [ ] Journey logic
+  - Find the optimal path(s) between 2 stations 
+    (time, price) & no path found case & customer interaction
+  - find all the paths and print them in groups of 5
+  - customer interaction regarding the choice (next 5, prev 5, choose one, cancel)
+  - ticket logic refactoring & ticket verification code
+- [ ] Implement pay functionality
+- [ ] Improve seats functionality (class 1, class 2, GUI etc.)
 - [ ] Implement a basic GUI using third party libraries (ask for advice on the library)
-- [ ] Integrate time dimension (and periodicity) in the project
-- [ ] Find the optimal path(s) between 2 cities depending on a given criteria (time, price, combination of these 2, maybe list of paths that respect a threshold?)
 - [ ] Integrate SystemAdmin functionalities
 - Enrich the project & add to resume
 

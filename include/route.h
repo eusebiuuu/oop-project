@@ -4,14 +4,17 @@
 #include "station.h"
 #include "string"
 #include "transportation.h"
+#include "world.h"
 
 class Route {
+    static int routeCount;
     Station origin, destination;
-    int routeID{}, duration{}, length{};
+    int routeID = 0, duration = 0, length = 0;
     double price{};
-    Transportation transport;
+    std::vector<std::string> timetable;
+    Transportation* transport = nullptr;
 public:
-    Route(int &, Station &, Station &, Transportation &);
+    Route(int &, Station &, Station &, Transportation*);
 
     Route() = default;
 
@@ -19,7 +22,7 @@ public:
 
     [[nodiscard]] double getPrice() const;
 
-    [[nodiscard]] Transportation &getTransport();
+    [[nodiscard]] Transportation* getTransport();
 
     [[nodiscard]] const Station &getOrigin() const;
 

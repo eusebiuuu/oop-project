@@ -1,52 +1,134 @@
-#include <fstream>
 #include "iostream"
 #include "station.h"
 #include "ticket.h"
 #include "customer.h"
+#include "discount-customer.h"
 #include "route.h"
 #include "world.h"
+#include "bus.h"
+#include "train.h"
+#include "plane.h"
 using namespace std;
 
-int main() {
-    // ifstream fin;
-    // fin.open("/home/eusebiuu/CLionProjects/oop-project/tastatura.txt");
-    // if (fin.fail()) {
-    //     cout << "Error\n";
-    //     return 1;
-    // }
-    World world;
+vector<Station*> readNStations() {
+    vector<Station*> stations;
     int statCount;
+    cout << "Stations count: ";
     cin >> statCount;
-    vector<Station> stations;
     for (int i = 0; i < statCount; ++i) {
-        Station stat;
-        cin >> stat;
+        Station* stat;
+        cin >> *stat;
         stations.push_back(stat);
     }
-    // print n objects
-    for (int i = 0; i < statCount; ++i) {
-        cout << stations[i];
-    }
+    return stations;
+}
+
+void readNRoutes(vector<Station*>& stations, World& world) {
     int routesCount;
+    cout << "Routes count: ";
     cin >> routesCount;
     // read n objects
     for (int i = 0; i < routesCount; ++i) {
-        Transportation transport;
-        cin >> transport;
+        cout << "1 - bus | 2 - train | 3 - plane\n";
+        // upcast
+        int type;
+        cin >> type;
+        Transportation* transportation;
+        if (type == 1) {
+            Bus* bus = new Bus("", -1);
+            cin >> *bus;
+            transportation = bus;
+        } else if (type == 2) {
+            auto* train = new Train("", "");
+            cin >> *train;
+            transportation = train;
+        } else {
+            auto* plane = new Plane("", "");
+            cin >> *plane;
+            transportation = plane;
+        }
         int length, idxStat1, idxStat2;
         cin >> length >> idxStat1 >> idxStat2;
-        Route currRoute(length, stations[idxStat1 - 1], stations[idxStat2 - 1], transport);
+        Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], transportation);
         world.addRoute(currRoute);
     }
-    Customer customer1;
-    cin >> customer1;
-    Customer customer2("2938", "RomicaIon", "elder");
-    Ticket ticket1 = customer1.buyTicket(stations[0], stations[1], world.getRoutes()[stations[0].getName()]);
-    Ticket ticket2 = customer2.buyTicket(stations[0], stations[2], world.getRoutes()[stations[0].getName()]);
-    cout << '\n' << ticket1 << '\n' << ticket2 << '\n';
-    const Ticket& copyTicket(ticket1);
-    cout << '\n' << copyTicket;
-    cout << copyTicket.getOrigin().getName() << '\n';
-    // fin.close();
+}
+
+Customer* readCustomer() {
+    int customerType;
+    cin >> customerType;
+    if (customerType == 1) {
+        Customer* customer;
+        cin >> *customer;
+        return customer;
+    }
+    DiscountCustomer* customer;
+    cin >> *customer;
+    DiscountCustomer* auxCustomer = customer;
+    return auxCustomer;
+}
+
+// downcast
+Ticket buyTicket(vector<Customer*>& customers, World& world) {
+    string customerID;
+    Station *stat1, *stat2;
+    cin >> customerID >> *stat1 >> *stat2;
+    int badCount, neededSeats;
+    vector<string> badTransport(badCount);
+    for (int i = 0; i < badCount; ++i) {
+        cin >> badTransport[i];
+    }
+    cin >> neededSeats;
+    for (Customer* customer : customers) {
+        if (customer->getCitizenId() != customerID) {
+            continue;
+        }
+        if (auto specialCustomer = dynamic_cast<DiscountCustomer*>(customer)) {
+            auto ticket = specialCustomer->buyDiscountTicket(*stat1, *stat2, world, badTransport, neededSeats);
+            delete specialCustomer;
+            return ticket;
+        }
+        return customer->buyTicket(*stat1, *stat2, world, badTransport, neededSeats);
+    }
+}
+
+int main() {
+    auto* world = new World();
+    vector<Station*> stations;
+    vector<Customer*> customers;
+    int command;
+    do {
+        cout << "Interactions:\n";
+        cout << "1: Add n station\n";
+        cout << "2: Add n routes (between existing stations)\n";
+        cout << "3: Add customer\n";
+        cout << "4: Buy ticket\n";
+        cout << "5: Print all the stations\n";
+        cout << "6: Exit\n";
+        cin >> command;
+        if (command == 1) {
+            stations = readNStations();
+        } else if (command == 2) {
+            readNRoutes(stations, *world);
+        } else if (command == 3) {
+            // upcast
+            customers.push_back(readCustomer());
+        } else if (command == 4) {
+            Ticket ticket = buyTicket(customers, *world);
+            cout << ticket << '\n';
+            const Ticket& copyTicket(ticket);
+            cout << '\n' << copyTicket;
+        } else if (command == 5) {
+            // print n objects
+            for (const auto & station : stations) {
+                cout << station;
+            }
+        } else if (command == 6) {
+            // print all transportation between 2 stations
+        }
+    } while (command != 7);
+    customers.clear();
+    stations.clear();
+    delete world;
     return 0;
 }
