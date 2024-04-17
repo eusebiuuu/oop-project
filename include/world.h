@@ -4,19 +4,21 @@
 #include "iostream"
 #include "unordered_map"
 #include "station.h"
-#include "route.h"
+#include <route.h>
+
+using namespace std;
 
 class World {
-    std::unordered_map<std::string, std::vector<Route>> routes{};
+    unordered_map<string, vector<Route>> routes{};
 public:
     World() = default;
 
     // print n objects
     void printAllTransportMeans(Station&, Station&);
 
-    void addRoute(const Route &route);
+    void addRoute(Route &);
 
-    std::unordered_map<std::string, std::vector<Route>> &getRoutes();
+    unordered_map<string, vector<Route>> &getRoutes();
 
     ~World() = default;
 };

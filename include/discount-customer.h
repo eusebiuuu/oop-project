@@ -2,19 +2,18 @@
 #define OOP_DISCOUNT_CUSTOMER_H
 
 #include "customer.h"
-#include "map"
-
-std::map<std::string, int> discounts =
-        {{"student", 90}, {"elder", 50}, {"donor", 50},
-         {"family", 10}, {"scholar_group", 10}};
+#include "unordered_map"
 
 class DiscountCustomer : public Customer {
     int discount;
+    std::unordered_map<std::string, int> discounts =
+            {{"student", 90}, {"elder", 50}, {"donor", 50},
+             {"family", 10}, {"scholar_group", 10}};
 public:
     DiscountCustomer(const std::string&, const std::string&, const std::string&);
 
     Ticket buyDiscountTicket(Station &, Station &, World &,
-                             const std::vector<std::string>&, int = 1);
+                             std::vector<std::string>&, int = 1);
 
     void read(std::istream &in) override;
 

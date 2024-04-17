@@ -1,7 +1,6 @@
-#include "route.h"
 #include "world.h"
 
-void World::addRoute(const Route &route) {
+void World::addRoute(Route &route) {
     this->routes[route.getOrigin().getName()].push_back(route);
 }
 
@@ -15,6 +14,6 @@ void World::printAllTransportMeans(Station& stat1, Station& stat2) {
         if (route.getDestination().getName() != stat2.getName()) {
             continue;
         }
-        std::cout << route.getTransport();
+        std::cout << *route.getTransport();
     }
 }

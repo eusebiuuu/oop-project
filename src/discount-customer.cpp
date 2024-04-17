@@ -8,7 +8,7 @@ DiscountCustomer::DiscountCustomer(const std::string& citizenID,
 }
 
 Ticket DiscountCustomer::buyDiscountTicket(Station& stat1, Station& stat2, World& world,
-                 const std::vector<std::string>& transport, int seats) {
+                 std::vector<std::string>& transport, int seats) {
     Ticket ticket = this->buyTicket(stat1, stat2, world, transport, seats);
     ticket *= (double) this->discount;
     return ticket;

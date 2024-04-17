@@ -12,9 +12,10 @@ Customer::Customer(std::string citizenID, std::string fullName) {
 }
 
 // downcast 1
-std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, World& world, const std::vector<std::string>& preferredTransport, int neededSeats) {
+std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route> allRoutes = world.getRoutes()[stat1.getName()], suitableRoutes;
     for (Route route : allRoutes) {
+        cout << route << '\n';
         if ((int) route.getTransport()->showAllFreeSeats().size() < neededSeats) {
             continue;
         }
@@ -26,15 +27,15 @@ std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, W
             continue;
         }
         if (dynamic_cast<Bus*>(route.getTransport())) {
-            if (std::count(preferredTransport.begin(), preferredTransport.end(), "bus") > 0) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "bus") == 0) {
                 suitableRoutes.push_back(route);
             }
         } else if (dynamic_cast<Train*>(route.getTransport())) {
-            if (std::count(preferredTransport.begin(), preferredTransport.end(), "train") > 0) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "train") == 0) {
                 suitableRoutes.push_back(route);
             }
         } else if (dynamic_cast<Plane*>(route.getTransport())) {
-            if (std::count(preferredTransport.begin(), preferredTransport.end(), "plane") > 0) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "plane") == 0) {
                 suitableRoutes.push_back(route);
             }
         }
@@ -42,9 +43,11 @@ std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, W
     return suitableRoutes;
 }
 
-Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, const std::vector<std::string>& preferredTransport, int neededSeats) {
+Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
+    // cout << stat1.getName() << ' ' << stat2.getName() << '\n';
     std::vector<Route> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
     std::sort(suitableRoutes.begin(), suitableRoutes.end());
+    cout << suitableRoutes.size() << '\n';
     if (suitableRoutes.empty()) {
         std::cout << "There is no available transportation on the chosen route:((\n";
         return Ticket{};

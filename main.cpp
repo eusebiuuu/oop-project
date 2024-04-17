@@ -16,7 +16,7 @@ vector<Station*> readNStations() {
     cout << "Stations count: ";
     cin >> statCount;
     for (int i = 0; i < statCount; ++i) {
-        Station* stat;
+        auto *stat = new Station();
         cin >> *stat;
         stations.push_back(stat);
     }
@@ -33,6 +33,7 @@ void readNRoutes(vector<Station*>& stations, World& world) {
         // upcast
         int type;
         cin >> type;
+        cout << type << '\n';
         Transportation* transportation;
         if (type == 1) {
             Bus* bus = new Bus("", -1);
@@ -58,11 +59,11 @@ Customer* readCustomer() {
     int customerType;
     cin >> customerType;
     if (customerType == 1) {
-        Customer* customer;
+        auto* customer = new Customer();
         cin >> *customer;
         return customer;
     }
-    DiscountCustomer* customer;
+    auto* customer = new DiscountCustomer("", "", "");
     cin >> *customer;
     DiscountCustomer* auxCustomer = customer;
     return auxCustomer;
@@ -71,12 +72,14 @@ Customer* readCustomer() {
 // downcast
 Ticket buyTicket(vector<Customer*>& customers, World& world) {
     string customerID;
-    Station *stat1, *stat2;
+    auto *stat1 = new Station(), *stat2 = new Station();
     cin >> customerID >> *stat1 >> *stat2;
     int badCount, neededSeats;
+    cin >> badCount;
     vector<string> badTransport(badCount);
     for (int i = 0; i < badCount; ++i) {
         cin >> badTransport[i];
+        cout << badTransport[i] << '\n';
     }
     cin >> neededSeats;
     for (Customer* customer : customers) {
@@ -90,6 +93,7 @@ Ticket buyTicket(vector<Customer*>& customers, World& world) {
         }
         return customer->buyTicket(*stat1, *stat2, world, badTransport, neededSeats);
     }
+    return Ticket{};
 }
 
 int main() {
@@ -104,7 +108,8 @@ int main() {
         cout << "3: Add customer\n";
         cout << "4: Buy ticket\n";
         cout << "5: Print all the stations\n";
-        cout << "6: Exit\n";
+        cout << "6: Print all transportation\n";
+        cout << "7: Exit\n";
         cin >> command;
         if (command == 1) {
             stations = readNStations();
@@ -120,11 +125,11 @@ int main() {
             cout << '\n' << copyTicket;
         } else if (command == 5) {
             // print n objects
-            for (const auto & station : stations) {
-                cout << station;
+            for (auto station : stations) {
+                cout << *station;
             }
         } else if (command == 6) {
-            // print all transportation between 2 stations
+            world->printAllTransportMeans(*stations[0], *stations[1]);
         }
     } while (command != 7);
     customers.clear();
