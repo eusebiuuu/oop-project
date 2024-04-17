@@ -5,6 +5,7 @@
 #include "bus.h"
 #include "train.h"
 #include "plane.h"
+#include "exception"
 
 Customer::Customer(std::string citizenID, std::string fullName) {
     this->citizenID = std::move(citizenID);
@@ -27,15 +28,15 @@ std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, W
             continue;
         }
         if (dynamic_cast<Bus*>(route.getTransport())) {
-            if (std::count(preferredTransport.begin(), preferredTransport.end(), "bus") == 0) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "bus") > 0) {
                 suitableRoutes.push_back(route);
             }
         } else if (dynamic_cast<Train*>(route.getTransport())) {
-            if (std::count(preferredTransport.begin(), preferredTransport.end(), "train") == 0) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "train") > 0) {
                 suitableRoutes.push_back(route);
             }
         } else if (dynamic_cast<Plane*>(route.getTransport())) {
-            if (std::count(preferredTransport.begin(), preferredTransport.end(), "plane") == 0) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "plane") > 0) {
                 suitableRoutes.push_back(route);
             }
         }
@@ -59,6 +60,22 @@ Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::ve
     // std::cout << "Enter the desired route's ID: \n";
     Route chosenRoute = suitableRoutes[0];
     Transportation* currTransport = chosenRoute.getTransport();
+    try {
+        if (dynamic_cast<Bus*>(currTransport)) {
+            throw std::out_of_range("bus");
+        } else if (dynamic_cast<Train*>(currTransport)) {
+            throw std::out_of_range("train");
+        } else if (dynamic_cast<Plane*>(currTransport)) {
+            throw std::out_of_range("plane");
+        }
+    } catch (std::out_of_range &err) {
+        if (count(preferredTransport.begin(), preferredTransport.end(), err.what()) > 0) {
+            throw std::invalid_argument("OK");
+        }
+        throw std::logic_error("Invalid transportation");
+    } catch (std::invalid_argument &err) {
+        cout << err.what() << '\n';
+    }
     std::cout << "Choose the seat(s): ";
     const std::vector<int> freeSeats = currTransport->showAllFreeSeats();
     for (const int &seat : freeSeats) {

@@ -31,8 +31,7 @@
 - [x] Enrich the project description
 #### Part 2
 - [ ] Incorporate the given tasks
-- [ ] Call the destructors (find real use cases)
-- [ ] Add more tests: simple tests, [mock tests](https://github.com/Ionnier/poo/tree/main/proiect/P03#mocking)
+- [ ] Refactor the project structure and coding style
 - [ ] Restructure the project logic (journeys, time etc.) & incorporate randomness
 - [ ] Integrate time component
 - [ ] Transportation logic improvements

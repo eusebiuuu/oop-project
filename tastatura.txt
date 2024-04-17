@@ -33,8 +33,8 @@ Beijing
 
 4
 1000 Madrid Beijing
-1
-bus
+3
+bus train plane
 1
 
 7

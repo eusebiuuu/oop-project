@@ -8,6 +8,7 @@
 #include "bus.h"
 #include "train.h"
 #include "plane.h"
+#include "exception"
 using namespace std;
 
 vector<Station*> readNStations() {
@@ -39,14 +40,17 @@ void readNRoutes(vector<Station*>& stations, World& world) {
             Bus* bus = new Bus("", -1);
             cin >> *bus;
             transportation = bus;
+            delete bus;
         } else if (type == 2) {
             auto* train = new Train("", "");
             cin >> *train;
             transportation = train;
+            delete train;
         } else {
             auto* plane = new Plane("", "");
             cin >> *plane;
             transportation = plane;
+            delete plane;
         }
         int length, idxStat1, idxStat2;
         cin >> length >> idxStat1 >> idxStat2;
@@ -71,6 +75,10 @@ Customer* readCustomer() {
 
 // downcast
 Ticket buyTicket(vector<Customer*>& customers, World& world) {
+    if (customers.empty()) {
+        throw std::invalid_argument("Customers array must not be empty");
+    }
+    const vector<string> possibleTypes = {"bus", "plane", "train"};
     string customerID;
     auto *stat1 = new Station(), *stat2 = new Station();
     cin >> customerID >> *stat1 >> *stat2;
@@ -79,7 +87,9 @@ Ticket buyTicket(vector<Customer*>& customers, World& world) {
     vector<string> badTransport(badCount);
     for (int i = 0; i < badCount; ++i) {
         cin >> badTransport[i];
-        cout << badTransport[i] << '\n';
+        if (count(possibleTypes.begin(), possibleTypes.end(), badTransport[i]) == 0) {
+            throw std::logic_error("Invalid transportation");
+        }
     }
     cin >> neededSeats;
     for (Customer* customer : customers) {
@@ -119,10 +129,14 @@ int main() {
             // upcast
             customers.push_back(readCustomer());
         } else if (command == 4) {
-            Ticket ticket = buyTicket(customers, *world);
-            cout << ticket << '\n';
-            const Ticket& copyTicket(ticket);
-            cout << '\n' << copyTicket;
+            try {
+                Ticket ticket = buyTicket(customers, *world);
+                cout << ticket << '\n';
+                const Ticket& copyTicket(ticket);
+                cout << '\n' << copyTicket;
+            } catch (std::logic_error &err) {
+                cerr << err.what() << '\n';
+            }
         } else if (command == 5) {
             // print n objects
             for (auto station : stations) {
