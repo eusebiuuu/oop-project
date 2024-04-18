@@ -5,7 +5,8 @@
 #include "bus.h"
 #include "train.h"
 #include "plane.h"
-#include "exception"
+#include "check-exception.h"
+#include "invalid-datatype.h"
 
 Customer::Customer(std::string citizenID, std::string fullName) {
     this->citizenID = std::move(citizenID);
@@ -62,19 +63,21 @@ Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::ve
     Transportation* currTransport = chosenRoute.getTransport();
     try {
         if (dynamic_cast<Bus*>(currTransport)) {
-            throw std::out_of_range("bus");
+            throw CheckException("bus");
         } else if (dynamic_cast<Train*>(currTransport)) {
-            throw std::out_of_range("train");
+            throw CheckException("train");
         } else if (dynamic_cast<Plane*>(currTransport)) {
-            throw std::out_of_range("plane");
+            throw CheckException("plane");
+        } else {
+            throw std::invalid_argument("Transportation type not in the accepted list");
         }
-    } catch (std::out_of_range &err) {
-        if (count(preferredTransport.begin(), preferredTransport.end(), err.what()) > 0) {
-            throw std::invalid_argument("OK");
+    } catch (CheckException &err) {
+        if (count(preferredTransport.begin(), preferredTransport.end(), err.what()) == 0) {
+            throw InvalidDatatype();
         }
-        throw std::logic_error("Invalid transportation");
-    } catch (std::invalid_argument &err) {
+    } catch (InvalidDatatype &err) {
         cout << err.what() << '\n';
+        return Ticket{};
     }
     std::cout << "Choose the seat(s): ";
     const std::vector<int> freeSeats = currTransport->showAllFreeSeats();

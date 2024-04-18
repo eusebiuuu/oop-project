@@ -9,6 +9,7 @@
 #include "train.h"
 #include "plane.h"
 #include "exception"
+#include "transportation-exception.h"
 using namespace std;
 
 vector<Station*> readNStations() {
@@ -134,8 +135,10 @@ int main() {
                 cout << ticket << '\n';
                 const Ticket& copyTicket(ticket);
                 cout << '\n' << copyTicket;
-            } catch (std::logic_error &err) {
+            } catch (TransportationException &err) {
                 cerr << err.what() << '\n';
+            } catch (std::exception &err) {
+                cerr << "Unknown error occurred\n";
             }
         } else if (command == 5) {
             // print n objects

@@ -31,6 +31,7 @@
 - [x] Enrich the project description
 #### Part 2
 - [ ] Incorporate the given tasks
+- [ ] Singleton on Menu class
 - [ ] Refactor the project structure and coding style
 - [ ] Restructure the project logic (journeys, time etc.) & incorporate randomness
 - [ ] Integrate time component
