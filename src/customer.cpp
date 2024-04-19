@@ -1,6 +1,5 @@
 #include "customer.h"
 #include <algorithm>
-#include <utility>
 #include "iostream"
 #include "bus.h"
 #include "train.h"
@@ -71,11 +70,11 @@ Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::ve
             throw std::invalid_argument("Transportation type not in the accepted list");
         }
     } catch (CheckException &err) {
-        if (count(preferredTransport.begin(), preferredTransport.end(), err.what()) == 0) {
+        if (std::count(preferredTransport.begin(), preferredTransport.end(), err.what()) == 0) {
             throw InvalidDatatype();
         }
     } catch (InvalidDatatype &err) {
-        cout << err.what() << '\n';
+        std::cout << err.what() << '\n';
         return Ticket{};
     }
     std::cout << "Choose the seat(s): ";

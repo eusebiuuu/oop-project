@@ -2,7 +2,8 @@
 #include "iostream"
 #include "cmath"
 
-int const MIN_IN_HOUR = 60, HOURS_IN_DAY = 24;
+int const MIN_IN_HOUR = 60;
+// int const HOURS_IN_DAY = 24;
 
 int Route::routeCount = 0;
 

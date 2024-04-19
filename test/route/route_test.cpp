@@ -4,7 +4,7 @@
 TEST(MySuitName, MyTestName) {
     Route route;
     Station station1("Station 1");
-    Station station2("Station 2");
+    // Station station2("Station 2");
     EXPECT_EQ(station1.getName(), "Station 1");
     /*Transportation transport(30, 49.99, 70, "bus");
     int routeLen = 100;

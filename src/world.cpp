@@ -8,7 +8,7 @@ std::unordered_map<std::string, std::vector<Route>> &World::getRoutes() {
     return routes;
 }
 
-void World::printAllTransportMeans(Station& stat1, Station& stat2) {
+void World::printAllTransportMeans(const Station& stat1, const Station& stat2) {
     std::vector<Route> allRoutes = this->getRoutes()[stat1.getName()];
     for (Route route : allRoutes) {
         if (route.getDestination().getName() != stat2.getName()) {

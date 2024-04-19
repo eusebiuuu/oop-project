@@ -14,7 +14,7 @@ public:
     World() = default;
 
     // print n objects
-    void printAllTransportMeans(Station&, Station&);
+    void printAllTransportMeans(const Station&, const Station&);
 
     void addRoute(Route &);
 
