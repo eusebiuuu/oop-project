@@ -10,6 +10,7 @@
 #include "plane.h"
 #include "exception"
 #include "transportation-exception.h"
+#include <algorithm>
 using namespace std;
 
 vector<Station*> readNStations() {
@@ -25,7 +26,7 @@ vector<Station*> readNStations() {
     return stations;
 }
 
-void readNRoutes(vector<Station*>& stations, World& world) {
+void readNRoutes(const vector<Station*>& stations, World& world) {
     int routesCount;
     cout << "Routes count: ";
     cin >> routesCount;
@@ -65,14 +66,14 @@ Customer* readCustomer() {
         cin >> *customer;
         return customer;
     }
-    auto* customer = new DiscountCustomer("", "", "");
+    auto* customer = new DiscountCustomer();
     cin >> *customer;
     DiscountCustomer* auxCustomer = customer;
     return auxCustomer;
 }
 
 // downcast
-Ticket buyTicket(vector<Customer*>& customers, World& world) {
+Ticket buyTicket(const vector<Customer*>& customers, World& world) {
     if (customers.empty()) {
         throw std::invalid_argument("Customers array must not be empty");
     }
@@ -85,7 +86,7 @@ Ticket buyTicket(vector<Customer*>& customers, World& world) {
     vector<string> badTransport(badCount);
     for (int i = 0; i < badCount; ++i) {
         cin >> badTransport[i];
-        if (count(possibleTypes.begin(), possibleTypes.end(), badTransport[i]) == 0) {
+        if (std::count(possibleTypes.begin(), possibleTypes.end(), badTransport[i]) == 0) {
             throw std::logic_error("Invalid transportation");
         }
     }
@@ -140,7 +141,7 @@ int main() {
             }
         } else if (command == 5) {
             // print n objects
-            for (auto station : stations) {
+            for (const auto station : stations) {
                 cout << *station;
             }
         } else if (command == 6) {

@@ -41,7 +41,7 @@ std::istream &operator>>(std::istream &in, Transportation &transportation) {
     return in;
 }
 
-std::ostream &operator<<(std::ostream &out, Transportation &transportation) {
+std::ostream &operator<<(std::ostream &out, const Transportation &transportation) {
     transportation.print(out);
     return out;
 }

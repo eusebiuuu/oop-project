@@ -14,7 +14,7 @@ void Bus::read(std::istream& in) {
     in >> this->model >> this->number;
 }
 
-void Bus::print(std::ostream& out) {
+void Bus::print(std::ostream& out) const {
     out << "Bus:\n";
     out << "  Model: " << this->model << '\n';
     out << "  Number: " << this->number << '\n';

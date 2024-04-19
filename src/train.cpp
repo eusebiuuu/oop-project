@@ -13,7 +13,7 @@ void Train::read(std::istream& in) {
     in >> this->model >> this->code;
 }
 
-void Train::print(std::ostream& out) {
+void Train::print(std::ostream& out) const {
     out << "Train:\n";
     out << "  Model: " << this->model << '\n';
     out << "  Code: " << this->code << '\n';

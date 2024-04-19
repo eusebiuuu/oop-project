@@ -13,7 +13,7 @@ void Plane::read(std::istream& in) {
     in >> this->model >> this->company;
 }
 
-void Plane::print(std::ostream& out) {
+void Plane::print(std::ostream& out) const {
     out << "Plane:\n";
     out << "  Model: " << this->model << '\n';
     out << "  Company: " << this->company << '\n';

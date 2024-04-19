@@ -13,7 +13,7 @@ class Route {
     std::vector<std::string> timetable;
     Transportation* transport = nullptr;
 public:
-    Route(int &, Station &, Station &, Transportation*);
+    Route(int &, const Station &, const Station &, Transportation*);
 
     Route() = default;
 

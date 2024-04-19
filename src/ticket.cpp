@@ -3,7 +3,7 @@
 
 int Ticket::ticketsCount = 0;
 
-Ticket::Ticket(Station &origin, Station &dest, double &price, std::vector<int> &seats) {
+Ticket::Ticket(const Station &origin, const Station &dest, const double &price, const std::vector<int> &seats) {
     this->origin = origin;
     this->destination = dest;
     this->seats = seats;

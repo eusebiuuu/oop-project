@@ -22,7 +22,7 @@ public:
 
     virtual void read(std::istream &) = 0;
 
-    virtual void print(std::ostream &) = 0;
+    virtual void print(std::ostream &) const = 0;
 
     [[maybe_unused]] Transportation(const int &, const double &, const int &);
 
@@ -36,7 +36,7 @@ public:
 
     friend std::istream& operator>>(std::istream &, Transportation &);
 
-    friend std::ostream& operator<<(std::ostream &, Transportation &);
+    friend std::ostream& operator<<(std::ostream &, const Transportation &);
 
     virtual ~Transportation();
 };

@@ -1,13 +1,13 @@
 #include "discount-customer.h"
 
-DiscountCustomer::DiscountCustomer(const std::string& citizenID,
-                                   const std::string& fullName,
+[[maybe_unused]] DiscountCustomer::DiscountCustomer(std::string& citizenID,
+                                   std::string& fullName,
                                    const std::string& type):
                                    Customer(citizenID, fullName) {
     this->discount = discounts[type];
 }
 
-Ticket DiscountCustomer::buyDiscountTicket(Station& stat1, Station& stat2, World& world,
+Ticket DiscountCustomer::buyDiscountTicket(const Station& stat1, const Station& stat2, World& world,
                  std::vector<std::string>& transport, int seats) {
     Ticket ticket = this->buyTicket(stat1, stat2, world, transport, seats);
     ticket *= (double) this->discount;

@@ -15,7 +15,7 @@ public:
 
     void read(std::istream &) override;
 
-    void print(std::ostream &) override;
+    void print(std::ostream &) const override;
 
     ~Train() override = default;
 };

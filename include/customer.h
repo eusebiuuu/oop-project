@@ -13,7 +13,7 @@ protected:
     std::string fullName;
 public:
     // overloading constructor
-    Customer(std::string, std::string);
+    Customer(const std::string&, const std::string&);
 
     // initialisation constructor
     Customer() = default;
@@ -25,9 +25,9 @@ public:
 
     Customer& operator=(const Customer &);
 
-    static std::vector<Route> getSuitableRoutes(Station &stat1, Station &stat2, World&, std::vector<std::string>&, int);
+    static std::vector<Route> getSuitableRoutes(const Station &stat1, const Station &stat2, World&, std::vector<std::string>&, int);
 
-    Ticket buyTicket(Station &, Station &, World&, std::vector<std::string>&, int = 1);
+    Ticket buyTicket(const Station &, const Station &, World&, std::vector<std::string>&, int = 1);
 
     virtual ~Customer() = default;
 

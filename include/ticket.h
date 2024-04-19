@@ -10,14 +10,9 @@ class Ticket {
     Station origin, destination;
     int ticketID;
 public:
-    Ticket(Station &, Station &, double &, std::vector<int> &);
+    Ticket(const Station &, const Station &, const double &, const std::vector<int> &);
 
-    Ticket() {
-        totalPrice = 0;
-        seats = {};
-        origin = destination = {};
-        ticketID = 0;
-    };
+    Ticket(): totalPrice(0.0), seats({}), origin(), destination(), ticketID(0) {}
 
     [[nodiscard]] double getTotalPrice() const;
 

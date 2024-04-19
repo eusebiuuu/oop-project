@@ -10,9 +10,11 @@ class DiscountCustomer : public Customer {
             {{"student", 90}, {"elder", 50}, {"donor", 50},
              {"family", 10}, {"scholar_group", 10}};
 public:
-    DiscountCustomer(const std::string&, const std::string&, const std::string&);
+    DiscountCustomer(): discount(0){}
 
-    Ticket buyDiscountTicket(Station &, Station &, World &,
+    [[maybe_unused]] DiscountCustomer(std::string&, std::string&, const std::string&);
+
+    Ticket buyDiscountTicket(const Station &, const Station &, World &,
                              std::vector<std::string>&, int = 1);
 
     void read(std::istream &in) override;

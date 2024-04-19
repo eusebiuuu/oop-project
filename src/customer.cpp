@@ -7,13 +7,13 @@
 #include "check-exception.h"
 #include "invalid-datatype.h"
 
-Customer::Customer(std::string citizenID, std::string fullName) {
-    this->citizenID = std::move(citizenID);
-    this->fullName = std::move(fullName);
+Customer::Customer(const std::string& citizenID, const std::string& fullName) {
+    this->citizenID = citizenID;
+    this->fullName = fullName;
 }
 
 // downcast 1
-std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
+std::vector<Route> Customer::getSuitableRoutes(const Station &stat1, const Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
     // cout << stat1 << '\n' << stat2 << '\n';
     std::vector<Route> allRoutes = world.getRoutes()[stat1.getName()], suitableRoutes;
     for (Route route : allRoutes) {
@@ -45,7 +45,7 @@ std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, W
     return suitableRoutes;
 }
 
-Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
+Ticket Customer::buyTicket(const Station &stat1, const Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
     std::sort(suitableRoutes.begin(), suitableRoutes.end());
     if (suitableRoutes.empty()) {

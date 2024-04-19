@@ -7,7 +7,7 @@ int const MIN_IN_HOUR = 60;
 
 int Route::routeCount = 0;
 
-Route::Route(int &length, Station &origin, Station &destination, Transportation* transport) {
+Route::Route(int &length, const Station &origin, const Station &destination, Transportation* transport) {
     this->length = length;
     this->origin = origin;
     this->destination = destination;

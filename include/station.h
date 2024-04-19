@@ -9,6 +9,7 @@ class Station {
     std::string name;
 public:
     explicit Station(const std::string &);
+
     Station() = default;
 
     [[nodiscard]] const std::string &getName() const;
