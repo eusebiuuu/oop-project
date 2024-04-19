@@ -41,17 +41,14 @@ void readNRoutes(vector<Station*>& stations, World& world) {
             Bus* bus = new Bus("", -1);
             cin >> *bus;
             transportation = bus;
-            delete bus;
         } else if (type == 2) {
             auto* train = new Train("", "");
             cin >> *train;
             transportation = train;
-            delete train;
         } else {
             auto* plane = new Plane("", "");
             cin >> *plane;
             transportation = plane;
-            delete plane;
         }
         int length, idxStat1, idxStat2;
         cin >> length >> idxStat1 >> idxStat2;
@@ -139,6 +136,7 @@ int main() {
                 cerr << err.what() << '\n';
             } catch (std::exception &err) {
                 cerr << "Unknown error occurred\n";
+                break;
             }
         } else if (command == 5) {
             // print n objects

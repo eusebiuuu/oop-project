@@ -15,9 +15,10 @@ Customer::Customer(std::string citizenID, std::string fullName) {
 
 // downcast 1
 std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
+    // cout << stat1 << '\n' << stat2 << '\n';
     std::vector<Route> allRoutes = world.getRoutes()[stat1.getName()], suitableRoutes;
     for (Route route : allRoutes) {
-        cout << route << '\n';
+        // cout << route << '\n';
         if ((int) route.getTransport()->showAllFreeSeats().size() < neededSeats) {
             continue;
         }
@@ -46,10 +47,8 @@ std::vector<Route> Customer::getSuitableRoutes(Station &stat1, Station &stat2, W
 }
 
 Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
-    // cout << stat1.getName() << ' ' << stat2.getName() << '\n';
     std::vector<Route> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
     std::sort(suitableRoutes.begin(), suitableRoutes.end());
-    cout << suitableRoutes.size() << '\n';
     if (suitableRoutes.empty()) {
         std::cout << "There is no available transportation on the chosen route:((\n";
         return Ticket{};
@@ -81,11 +80,14 @@ Ticket Customer::buyTicket(Station &stat1, Station &stat2, World& world, std::ve
     }
     std::cout << "Choose the seat(s): ";
     const std::vector<int> freeSeats = currTransport->showAllFreeSeats();
-    for (const int &seat : freeSeats) {
-        std::cout << seat << ' ';
-    }
+    // for (const int &seat : freeSeats) {
+    //     std::cout << seat << ' ';
+    // }
     std::cout << '\n';
-    std::vector<int> seatsToOccupy = {freeSeats[0]};
+    std::vector<int> seatsToOccupy(neededSeats);
+    for (int i = 0; i < neededSeats; ++i) {
+        seatsToOccupy[i] = freeSeats[i];
+    }
     currTransport->occupySeats(seatsToOccupy);
     double currPrice = chosenRoute.getPrice();
     Ticket boughtTicket(stat1, stat2, currPrice, seatsToOccupy);

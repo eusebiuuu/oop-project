@@ -16,6 +16,7 @@ void Transportation::occupySeats(const std::vector<int> &seatsToBeOccupied) {
 
 std::vector<int> Transportation::showAllFreeSeats() const {
     std::vector<int> freeSeats;
+    std::cout << this->occupiedSeats.size() << '\n';
     // std::cout << sizeof(occupiedSeats) <<'\n';
     for (int i = 1; i <= this->totalSeats; ++i) {
         if (!occupiedSeats[i - 1]) {

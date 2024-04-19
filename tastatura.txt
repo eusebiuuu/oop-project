@@ -37,4 +37,10 @@ Beijing
 bus train plane
 1
 
+4
+1000 New-York Los-Angeles
+2
+plane train
+1
+
 7
