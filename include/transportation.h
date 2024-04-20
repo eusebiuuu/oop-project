@@ -26,6 +26,8 @@ public:
 
     [[maybe_unused]] Transportation(const int &, const double &, const int &);
 
+    Transportation &operator=(const Transportation &);
+
     void occupySeats(const std::vector<int> &);
 
     [[nodiscard]] std::vector<int> showAllFreeSeats() const;

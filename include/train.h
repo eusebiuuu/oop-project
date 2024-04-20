@@ -7,7 +7,7 @@
 class Train: public Transportation {
     std::string code;
 public:
-    explicit Train(const std::string&, const std::string&);
+    explicit Train(const std::string& = "", const std::string& = "");
 
     std::string getModel() override {
         return this->model;

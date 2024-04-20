@@ -16,13 +16,14 @@ void Transportation::occupySeats(const std::vector<int> &seatsToBeOccupied) {
 
 std::vector<int> Transportation::showAllFreeSeats() const {
     std::vector<int> freeSeats;
-    std::cout << this->occupiedSeats.size() << '\n';
+    // std::cout << this->occupiedSeats.size() << '\n';
     // std::cout << sizeof(occupiedSeats) <<'\n';
     for (int i = 1; i <= this->totalSeats; ++i) {
         if (!occupiedSeats[i - 1]) {
             freeSeats.push_back(i);
         }
     }
+    std::cout << freeSeats.size() << '\n';
     return freeSeats;
 }
 
@@ -44,6 +45,16 @@ std::istream &operator>>(std::istream &in, Transportation &transportation) {
 std::ostream &operator<<(std::ostream &out, const Transportation &transportation) {
     transportation.print(out);
     return out;
+}
+
+Transportation& Transportation::operator=(const Transportation &transport) {
+    if (this != &transport) {
+        this->speed = transport.speed;
+        this->totalSeats = transport.totalSeats;
+        this->occupiedSeats = transport.occupiedSeats;
+        this->price = transport.price;
+    }
+    return *this;
 }
 
 Transportation::~Transportation() {

@@ -6,7 +6,7 @@
 class Bus: public Transportation {
     int number;
 public:
-    explicit Bus(const std::string&, const int&);
+    explicit Bus(const std::string& = "", const int& = 0);
 
     std::string getModel() override {
         return this->model;

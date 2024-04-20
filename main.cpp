@@ -19,7 +19,7 @@ vector<Station*> readNStations() {
     cout << "Stations count: ";
     cin >> statCount;
     for (int i = 0; i < statCount; ++i) {
-        auto *stat = new Station();
+        auto* stat = new Station();
         cin >> *stat;
         stations.push_back(stat);
     }
@@ -32,29 +32,28 @@ void readNRoutes(const vector<Station*>& stations, World& world) {
     cin >> routesCount;
     // read n objects
     for (int i = 0; i < routesCount; ++i) {
+        int length, idxStat1, idxStat2;
+        cin >> length >> idxStat1 >> idxStat2;
         cout << "1 - bus | 2 - train | 3 - plane\n";
         // upcast
         int type;
         cin >> type;
-        cout << type << '\n';
-        Transportation* transportation;
         if (type == 1) {
-            Bus* bus = new Bus("", -1);
+            auto *bus = new Bus();
             cin >> *bus;
-            transportation = bus;
+            Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], bus);
+            world.addRoute(currRoute);
         } else if (type == 2) {
-            auto* train = new Train("", "");
+            auto *train = new Train();
             cin >> *train;
-            transportation = train;
+            Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], train);
+            world.addRoute(currRoute);
         } else {
-            auto* plane = new Plane("", "");
+            auto *plane = new Plane();
             cin >> *plane;
-            transportation = plane;
+            Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], plane);
+            world.addRoute(currRoute);
         }
-        int length, idxStat1, idxStat2;
-        cin >> length >> idxStat1 >> idxStat2;
-        Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], transportation);
-        world.addRoute(currRoute);
     }
 }
 
@@ -79,8 +78,8 @@ Ticket buyTicket(const vector<Customer*>& customers, World& world) {
     }
     const vector<string> possibleTypes = {"bus", "plane", "train"};
     string customerID;
-    auto *stat1 = new Station(), *stat2 = new Station();
-    cin >> customerID >> *stat1 >> *stat2;
+    Station stat1(""), stat2("");
+    cin >> customerID >> stat1 >> stat2;
     int badCount, neededSeats;
     cin >> badCount;
     vector<string> badTransport(badCount);
@@ -96,11 +95,11 @@ Ticket buyTicket(const vector<Customer*>& customers, World& world) {
             continue;
         }
         if (auto specialCustomer = dynamic_cast<DiscountCustomer*>(customer)) {
-            auto ticket = specialCustomer->buyDiscountTicket(*stat1, *stat2, world, badTransport, neededSeats);
+            auto ticket = specialCustomer->buyDiscountTicket(stat1, stat2, world, badTransport, neededSeats);
             delete specialCustomer;
             return ticket;
         }
-        return customer->buyTicket(*stat1, *stat2, world, badTransport, neededSeats);
+        return customer->buyTicket(stat1, stat2, world, badTransport, neededSeats);
     }
     return Ticket{};
 }
@@ -141,14 +140,20 @@ int main() {
             }
         } else if (command == 5) {
             // print n objects
-            for (const auto station : stations) {
+            for (const Station* station : stations) {
                 cout << *station;
             }
         } else if (command == 6) {
             world->printAllTransportMeans(*stations[0], *stations[1]);
         }
     } while (command != 7);
+    for (auto customer : customers) {
+        delete customer;
+    }
     customers.clear();
+    for (auto const station : stations) {
+        delete station;
+    }
     stations.clear();
     delete world;
     return 0;

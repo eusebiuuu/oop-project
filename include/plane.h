@@ -7,7 +7,7 @@
 class Plane: public Transportation {
     std::string company;
 public:
-    explicit Plane(const std::string&, const std::string&);
+    explicit Plane(const std::string& = "", const std::string& = "");
 
     std::string getModel() override {
         return this->model;

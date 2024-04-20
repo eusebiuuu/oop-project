@@ -48,6 +48,7 @@ std::vector<Route> Customer::getSuitableRoutes(const Station &stat1, const Stati
 Ticket Customer::buyTicket(const Station &stat1, const Station &stat2, World& world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
     std::sort(suitableRoutes.begin(), suitableRoutes.end());
+    cout << suitableRoutes.size() << '\n';
     if (suitableRoutes.empty()) {
         std::cout << "There is no available transportation on the chosen route:((\n";
         return Ticket{};
