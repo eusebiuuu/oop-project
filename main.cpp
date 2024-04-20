@@ -147,7 +147,7 @@ int main() {
             world->printAllTransportMeans(*stations[0], *stations[1]);
         }
     } while (command != 7);
-    for (auto customer : customers) {
+    for (const Customer* customer : customers) {
         delete customer;
     }
     customers.clear();

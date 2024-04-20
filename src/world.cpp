@@ -11,7 +11,7 @@ std::unordered_map<std::string, std::vector<Route*>> &World::getRoutes() {
 // downcast 2 + print n objects
 void World::printAllTransportMeans(const Station& stat1, const Station& stat2) {
     std::vector<Route*> allRoutes = this->getRoutes()[stat1.getName()];
-    for (Route* route : allRoutes) {
+    for (const Route* route : allRoutes) {
         if (route->getDestination().getName() != stat2.getName()) {
             continue;
         }
