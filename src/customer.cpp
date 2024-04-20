@@ -15,7 +15,7 @@ Customer::Customer(const std::string& citizenID, const std::string& fullName) {
 // downcast 1
 std::vector<Route*> Customer::getSuitableRoutes(const Station &stat1, const Station &stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route*> allRoutes = world->getRoutes()[stat1.getName()], suitableRoutes;
-    for (const Route* route : allRoutes) {
+    for (Route* route : allRoutes) {
         if ((int) route->getTransport()->showAllFreeSeats().size() < neededSeats) {
             continue;
         }
