@@ -53,8 +53,6 @@ void readNRoutes(const vector<Station*>& stations, World* world) {
             cin >> plane;
             auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], plane);
             world->addRoute(currRoute);
-//            cout << "Main: " << currRoute.getTransport()->getModel() << '\n';
-//            currRoute.getTransport()->showAllFreeSeats();
         }
     }
 }

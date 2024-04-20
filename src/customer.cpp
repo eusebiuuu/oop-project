@@ -16,16 +16,6 @@ Customer::Customer(const std::string& citizenID, const std::string& fullName) {
 std::vector<Route*> Customer::getSuitableRoutes(const Station &stat1, const Station &stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route*> allRoutes = world->getRoutes()[stat1.getName()], suitableRoutes;
     for (Route* route : allRoutes) {
-        // cout << route << '\n';
-//        if (dynamic_cast<Bus*>(route.getTransport())) {
-//            cout << "bus\n";
-//        } else if (dynamic_cast<Train*>(route.getTransport())) {
-//            cout << "train\n";
-//        } else if (dynamic_cast<Plane*>(route.getTransport())) {
-//            cout << "plane\n";
-//        }
-//        cout << route->getTransport()->getModel() << '\n';
-//        cout << route->getTransport()->getOccupiedSeats().size() << '\n';
         if ((int) route->getTransport()->showAllFreeSeats().size() < neededSeats) {
             continue;
         }

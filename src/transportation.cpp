@@ -63,7 +63,3 @@ Transportation::~Transportation() {
     price = 0.0;
     speed = 0;
 }
-
-[[maybe_unused]] const std::vector<bool> &Transportation::getOccupiedSeats() const {
-    return occupiedSeats;
-}
