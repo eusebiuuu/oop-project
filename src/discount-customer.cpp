@@ -7,7 +7,7 @@
     this->discount = discounts[type];
 }
 
-Ticket DiscountCustomer::buyDiscountTicket(const Station& stat1, const Station& stat2, World& world,
+Ticket DiscountCustomer::buyDiscountTicket(const Station& stat1, const Station& stat2, World *world,
                  std::vector<std::string>& transport, int seats) {
     Ticket ticket = this->buyTicket(stat1, stat2, world, transport, seats);
     ticket *= (double) this->discount;

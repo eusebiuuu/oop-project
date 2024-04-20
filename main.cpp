@@ -26,7 +26,7 @@ vector<Station*> readNStations() {
     return stations;
 }
 
-void readNRoutes(const vector<Station*>& stations, World& world) {
+void readNRoutes(const vector<Station*>& stations, World* world) {
     int routesCount;
     cout << "Routes count: ";
     cin >> routesCount;
@@ -39,20 +39,22 @@ void readNRoutes(const vector<Station*>& stations, World& world) {
         int type;
         cin >> type;
         if (type == 1) {
-            auto *bus = new Bus();
-            cin >> *bus;
-            Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], bus);
-            world.addRoute(currRoute);
+            auto bus = new Bus();
+            cin >> bus;
+            auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], bus);
+            world->addRoute(currRoute);
         } else if (type == 2) {
-            auto *train = new Train();
-            cin >> *train;
-            Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], train);
-            world.addRoute(currRoute);
+            auto train = new Train();
+            cin >> train;
+            auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], train);
+            world->addRoute(currRoute);
         } else {
-            auto *plane = new Plane();
-            cin >> *plane;
-            Route currRoute(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], plane);
-            world.addRoute(currRoute);
+            auto plane = new Plane();
+            cin >> plane;
+            auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], plane);
+            world->addRoute(currRoute);
+//            cout << "Main: " << currRoute.getTransport()->getModel() << '\n';
+//            currRoute.getTransport()->showAllFreeSeats();
         }
     }
 }
@@ -72,7 +74,7 @@ Customer* readCustomer() {
 }
 
 // downcast
-Ticket buyTicket(const vector<Customer*>& customers, World& world) {
+Ticket buyTicket(const vector<Customer*>& customers, World *world) {
     if (customers.empty()) {
         throw std::invalid_argument("Customers array must not be empty");
     }
@@ -122,20 +124,20 @@ int main() {
         if (command == 1) {
             stations = readNStations();
         } else if (command == 2) {
-            readNRoutes(stations, *world);
+            readNRoutes(stations, world);
         } else if (command == 3) {
             // upcast
             customers.push_back(readCustomer());
         } else if (command == 4) {
             try {
-                Ticket ticket = buyTicket(customers, *world);
+                Ticket ticket = buyTicket(customers, world);
                 cout << ticket << '\n';
                 const Ticket& copyTicket(ticket);
                 cout << '\n' << copyTicket;
             } catch (TransportationException &err) {
                 cerr << err.what() << '\n';
             } catch (std::exception &err) {
-                cerr << "Unknown error occurred\n";
+                cerr << "Unknown error occurred: " << err.what() << '\n';
                 break;
             }
         } else if (command == 5) {
@@ -151,7 +153,7 @@ int main() {
         delete customer;
     }
     customers.clear();
-    for (auto const station : stations) {
+    for (const Station* station : stations) {
         delete station;
     }
     stations.clear();

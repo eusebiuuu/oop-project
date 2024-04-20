@@ -3,7 +3,7 @@
 #include "cmath"
 
 int const MIN_IN_HOUR = 60;
-// int const HOURS_IN_DAY = 24;
+//int const HOURS_IN_DAY = 24;
 
 int Route::routeCount = 0;
 
@@ -13,6 +13,7 @@ Route::Route(int &length, const Station &origin, const Station &destination, Tra
     this->destination = destination;
     this->duration = (int) std::ceil((1.0 * length / transport->getSpeed()) * MIN_IN_HOUR);
     this->price = length * transport->getPrice();
+    // std::cout << "Route constructor: " << transport->getModel() << '\n';
     this->transport = transport;
     this->routeID = Route::routeCount++;
 }
@@ -31,7 +32,7 @@ double Route::getPrice() const {
     return price;
 }
 
-Transportation* Route::getTransport() {
+Transportation* Route::getTransport() const {
     return this->transport;
 }
 
@@ -44,7 +45,7 @@ const Station &Route::getDestination() const {
 }
 
 std::istream &operator>>(std::istream &in, Route &route) {
-    in >> route.length >> route.origin >> route.destination >> *route.transport;
+    in >> route.length >> route.origin >> route.destination >> route.transport;
     route.price = route.length * route.transport->getPrice();
     route.duration = (int) std::ceil((route.length / route.transport->getSpeed()) * MIN_IN_HOUR);
     route.routeID = Route::routeCount++;
@@ -54,6 +55,4 @@ std::istream &operator>>(std::istream &in, Route &route) {
 bool operator<(const Route &route1, const Route &route2) {
     return route1.price < route2.price;
 }
-
-// downcast 2 + print n objects
 

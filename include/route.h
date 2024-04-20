@@ -4,6 +4,9 @@
 #include "station.h"
 #include "string"
 #include "transportation.h"
+#include "bus.h"
+#include "train.h"
+#include "plane.h"
 
 class Route {
     static int routeCount;
@@ -11,7 +14,7 @@ class Route {
     int routeID = 0, duration = 0, length = 0;
     double price{};
     std::vector<std::string> timetable;
-    Transportation* transport = nullptr;
+    Transportation* transport{};
 public:
     Route(int &, const Station &, const Station &, Transportation*);
 
@@ -21,7 +24,7 @@ public:
 
     [[nodiscard]] double getPrice() const;
 
-    [[nodiscard]] Transportation* getTransport();
+    [[nodiscard]] Transportation* getTransport() const;
 
     [[nodiscard]] const Station &getOrigin() const;
 
@@ -30,6 +33,11 @@ public:
     friend std::istream& operator>>(std::istream &, Route &);
 
     friend bool operator<(const Route&, const Route &);
+
+    ~Route() {
+        delete transport;
+        timetable.clear();
+    }
 };
 
 #endif //OOP_ROUTE_H

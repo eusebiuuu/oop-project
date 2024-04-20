@@ -9,18 +9,24 @@
 using namespace std;
 
 class World {
-    unordered_map<string, vector<Route>> routes{};
+    unordered_map<string, vector<Route*>> routes{};
 public:
     World() = default;
 
     // print n objects
     void printAllTransportMeans(const Station&, const Station&);
 
-    void addRoute(Route &);
+    void addRoute(Route*);
 
-    unordered_map<string, vector<Route>> &getRoutes();
+    unordered_map<string, vector<Route*>> &getRoutes();
 
-    ~World() = default;
+    ~World() {
+        for (auto& elem : routes) {
+            for (const Route* route : elem.second) {
+                delete route;
+            }
+        }
+    };
 };
 
 #endif //OOP_WORLD_H

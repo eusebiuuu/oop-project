@@ -36,11 +36,13 @@ public:
 
     [[nodiscard]] double getPrice() const;
 
-    friend std::istream& operator>>(std::istream &, Transportation &);
+    friend std::istream& operator>>(std::istream &, Transportation*);
 
     friend std::ostream& operator<<(std::ostream &, const Transportation &);
 
     virtual ~Transportation();
+
+    [[maybe_unused]] [[nodiscard]] const std::vector<bool> &getOccupiedSeats() const;
 };
 
 #endif //OOP_TRANSPORTATION_H
