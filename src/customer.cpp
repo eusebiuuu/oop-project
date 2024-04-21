@@ -4,6 +4,7 @@
 #include "bus.h"
 #include "train.h"
 #include "plane.h"
+#include "subway.h"
 #include "check-exception.h"
 #include "invalid-datatype.h"
 
@@ -38,6 +39,10 @@ std::vector<Route*> Customer::getSuitableRoutes(const Station *stat1, const Stat
             if (std::count(preferredTransport.begin(), preferredTransport.end(), "plane") > 0) {
                 suitableRoutes.push_back(route);
             }
+        } else if (dynamic_cast<Subway*>(route->getTransport())) {
+            if (std::count(preferredTransport.begin(), preferredTransport.end(), "subway") > 0) {
+                suitableRoutes.push_back(route);
+            }
         }
     }
     return suitableRoutes;
@@ -65,6 +70,8 @@ Ticket Customer::buyTicket(const Station *stat1, const Station *stat2, World *wo
             throw CheckException("train");
         } else if (dynamic_cast<Plane*>(currTransport)) {
             throw CheckException("plane");
+        } else if (dynamic_cast<Subway*>(currTransport)) {
+            throw CheckException("subway");
         } else {
             throw std::invalid_argument("Transportation type not in the accepted list");
         }

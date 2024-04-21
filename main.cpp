@@ -10,6 +10,7 @@
 #include "plane.h"
 #include "exception"
 #include "transportation-exception.h"
+#include "subway.h"
 #include <algorithm>
 using namespace std;
 
@@ -34,7 +35,7 @@ void readNRoutes(const vector<Station*>& stations, World* world) {
     for (int i = 0; i < routesCount; ++i) {
         int length, idxStat1, idxStat2;
         cin >> length >> idxStat1 >> idxStat2;
-        cout << "1 - bus | 2 - train | 3 - plane\n";
+        cout << "1 - bus | 2 - train | 3 - plane | 4 - subway\n";
         // upcast
         int type;
         cin >> type;
@@ -48,10 +49,15 @@ void readNRoutes(const vector<Station*>& stations, World* world) {
             cin >> train;
             auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], train);
             world->addRoute(currRoute);
-        } else {
+        } else if (type == 3) {
             auto plane = new Plane();
             cin >> plane;
             auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], plane);
+            world->addRoute(currRoute);
+        } else {
+            auto subway = new Subway();
+            cin >> subway;
+            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], subway);
             world->addRoute(currRoute);
         }
     }
@@ -76,7 +82,7 @@ Ticket buyTicket(const vector<Customer*>& customers, World *world) {
     if (customers.empty()) {
         throw std::invalid_argument("Customers array must not be empty");
     }
-    const vector<string> possibleTypes = {"bus", "plane", "train"};
+    const vector<string> possibleTypes = {"bus", "plane", "train", "subway"};
     string customerID;
     Station stat1, stat2;
     cin >> customerID >> &stat1 >> &stat2;
