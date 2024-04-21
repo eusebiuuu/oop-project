@@ -78,8 +78,8 @@ Ticket buyTicket(const vector<Customer*>& customers, World *world) {
     }
     const vector<string> possibleTypes = {"bus", "plane", "train"};
     string customerID;
-    auto *stat1 = new Station(), *stat2 = new Station();
-    cin >> customerID >> stat1 >> stat2;
+    Station stat1, stat2;
+    cin >> customerID >> &stat1 >> &stat2;
     int badCount, neededSeats;
     cin >> badCount;
     vector<string> badTransport(badCount);
@@ -95,14 +95,12 @@ Ticket buyTicket(const vector<Customer*>& customers, World *world) {
             continue;
         }
         if (auto specialCustomer = dynamic_cast<DiscountCustomer*>(customer)) {
-            auto ticket = specialCustomer->buyDiscountTicket(stat1, stat2, world, badTransport, neededSeats);
+            auto ticket = specialCustomer->buyDiscountTicket(&stat1, &stat2, world, badTransport, neededSeats);
             delete specialCustomer;
             return ticket;
         }
-        return customer->buyTicket(stat1, stat2, world, badTransport, neededSeats);
+        return customer->buyTicket(&stat1, &stat2, world, badTransport, neededSeats);
     }
-    delete stat1;
-    delete stat2;
     return Ticket{};
 }
 
