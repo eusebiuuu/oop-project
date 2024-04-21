@@ -101,6 +101,8 @@ Ticket buyTicket(const vector<Customer*>& customers, World *world) {
         }
         return customer->buyTicket(stat1, stat2, world, badTransport, neededSeats);
     }
+    delete stat1;
+    delete stat2;
     return Ticket{};
 }
 
