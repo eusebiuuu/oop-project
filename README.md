@@ -91,8 +91,7 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
 - [x] citirea și afișarea a n obiecte [(0.5p)](https://github.com/Ionnier/oop-template-t1/blob/main/main.cpp#L13)
   - poate fi combinat cu demonstrarea upcasting-ului & downcast-ului printr-un vector către o clasă de bază
   - poate fi făcut oriunde (dacă aveți deja o clasă cu un vector, de exemplu o clasă Coș cu un vector<Produs>)
-- [ ] existența unui pull request către branch-ul în care lucrați ce include adăugarea unei noi derivate ce evidențiază că modificările aduse sunt minimale (0.5p)
+- [x] existența unui pull request către branch-ul în care lucrați ce include adăugarea unei noi derivate ce evidențiază că modificările aduse sunt minimale (0.5p)
   - derivata nu poate fi una ștearsă și rescrisă
   - derivata va avea date membre noi + o modificare de comportament pe una dintre funcțiile virtuale
-- [ ] Add more tests: simple tests, [mock tests](https://github.com/Ionnier/poo/tree/main/proiect/P03#mocking)
-- Check the workflow
+- [x] Add more tests
