@@ -14,7 +14,7 @@ public:
 
     [[maybe_unused]] DiscountCustomer(std::string&, std::string&, const std::string&);
 
-    Ticket buyDiscountTicket(const Station &, const Station &, World *,
+    Ticket buyDiscountTicket(const Station *, const Station *, World *,
                              std::vector<std::string>&, int = 1);
 
     void read(std::istream &in) override;

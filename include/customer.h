@@ -25,9 +25,9 @@ public:
 
     Customer& operator=(const Customer &);
 
-    static std::vector<Route*> getSuitableRoutes(const Station &stat1, const Station &stat2, World*, std::vector<std::string>&, int);
+    static std::vector<Route*> getSuitableRoutes(const Station *, const Station *, World*, std::vector<std::string>&, int);
 
-    Ticket buyTicket(const Station &, const Station &, World*, std::vector<std::string>&, int = 1);
+    Ticket buyTicket(const Station*, const Station*, World*, std::vector<std::string>&, int = 1);
 
     virtual ~Customer() = default;
 

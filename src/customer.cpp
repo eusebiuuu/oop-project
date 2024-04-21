@@ -13,13 +13,13 @@ Customer::Customer(const std::string& citizenID, const std::string& fullName) {
 }
 
 // downcast 1
-std::vector<Route*> Customer::getSuitableRoutes(const Station &stat1, const Station &stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
-    std::vector<Route*> allRoutes = world->getRoutes()[stat1.getName()], suitableRoutes;
+std::vector<Route*> Customer::getSuitableRoutes(const Station *stat1, const Station *stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
+    std::vector<Route*> allRoutes = world->getRoutes()[stat1->getName()], suitableRoutes;
     for (Route* route : allRoutes) {
         if ((int) route->getTransport()->showAllFreeSeats().size() < neededSeats) {
             continue;
         }
-        if (route->getDestination().getName() != stat2.getName()) {
+        if (route->getDestination()->getName() != stat2->getName()) {
             continue;
         }
         if (preferredTransport.empty()) {
@@ -43,7 +43,7 @@ std::vector<Route*> Customer::getSuitableRoutes(const Station &stat1, const Stat
     return suitableRoutes;
 }
 
-Ticket Customer::buyTicket(const Station &stat1, const Station &stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
+Ticket Customer::buyTicket(const Station *stat1, const Station *stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route*> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
     std::sort(suitableRoutes.begin(), suitableRoutes.end());
 //    cout << suitableRoutes.size() << '\n';
@@ -88,7 +88,7 @@ Ticket Customer::buyTicket(const Station &stat1, const Station &stat2, World *wo
     }
     currTransport->occupySeats(seatsToOccupy);
     double currPrice = chosenRoute->getPrice();
-    Ticket boughtTicket(stat1, stat2, currPrice, seatsToOccupy);
+    Ticket boughtTicket(*stat1, *stat2, currPrice, seatsToOccupy);
     std::cout << boughtTicket.getTotalPrice() << '\n';
     this->purchasedTickets.push_back(boughtTicket);
     return boughtTicket;
@@ -99,7 +99,7 @@ std::istream &operator>>(std::istream &in, Customer &customer) {
     return in;
 }
 
-Customer &Customer::operator=(const Customer & customer) {
+Customer &Customer::operator=(const Customer &customer) {
     this->fullName = customer.fullName;
     this->citizenID = customer.citizenID;
     return *this;

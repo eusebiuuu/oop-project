@@ -10,13 +10,13 @@
 
 class Route {
     static int routeCount;
-    Station origin, destination;
+    Station *origin{}, *destination{};
     int routeID = 0, duration = 0, length = 0;
     double price{};
     std::vector<std::string> timetable;
     Transportation* transport{};
 public:
-    Route(int &, const Station &, const Station &, Transportation*);
+    Route(int &, Station *, Station *, Transportation*);
 
     Route() = default;
 
@@ -26,9 +26,9 @@ public:
 
     [[nodiscard]] Transportation* getTransport() const;
 
-    [[nodiscard]] const Station &getOrigin() const;
+    [[nodiscard]] const Station *getOrigin() const;
 
-    [[nodiscard]] const Station &getDestination() const;
+    [[nodiscard]] const Station *getDestination() const;
 
     friend std::istream& operator>>(std::istream &, Route &);
 
@@ -36,6 +36,8 @@ public:
 
     ~Route() {
         delete transport;
+//        delete origin;
+//        delete destination;
         timetable.clear();
     }
 };

@@ -7,7 +7,7 @@ int const MIN_IN_HOUR = 60;
 
 int Route::routeCount = 0;
 
-Route::Route(int &length, const Station &origin, const Station &destination, Transportation* transport) {
+Route::Route(int &length, Station *origin, Station *destination, Transportation* transport) {
     this->length = length;
     this->origin = origin;
     this->destination = destination;
@@ -20,8 +20,8 @@ Route::Route(int &length, const Station &origin, const Station &destination, Tra
 
 std::ostream& operator<<(std::ostream &out, const Route &route) {
     out << "Route ID: " << route.routeID << '\n';
-    out << "Start: " << route.origin.getName() << '\n';
-    out << "Destination: " << route.destination.getName() << '\n';
+    out << "Start: " << route.origin->getName() << '\n';
+    out << "Destination: " << route.destination->getName() << '\n';
     out << "Length (in km): " << route.length << '\n';
     out << "Duration (in min): " << route.duration << '\n';
     out << "Price: " << route.price << '\n';
@@ -36,11 +36,11 @@ Transportation* Route::getTransport() const {
     return this->transport;
 }
 
-const Station &Route::getOrigin() const {
+const Station *Route::getOrigin() const {
     return origin;
 }
 
-const Station &Route::getDestination() const {
+const Station *Route::getDestination() const {
     return destination;
 }
 

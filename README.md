@@ -95,3 +95,4 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
   - derivata nu poate fi una ștearsă și rescrisă
   - derivata va avea date membre noi + o modificare de comportament pe una dintre funcțiile virtuale
 - [ ] Add more tests: simple tests, [mock tests](https://github.com/Ionnier/poo/tree/main/proiect/P03#mocking)
+- Check the workflow

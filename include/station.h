@@ -14,9 +14,11 @@ public:
 
     [[nodiscard]] const std::string &getName() const;
 
-    friend std::istream& operator>>(std::istream &, Station &);
+    friend std::istream& operator>>(std::istream &, Station *);
 
-    friend std::ostream& operator<<(std::ostream&, const Station &);
+    friend std::ostream& operator<<(std::ostream&, const Station *);
+
+    ~Station() = default;
 };
 
 #endif //OOP_STATION_H

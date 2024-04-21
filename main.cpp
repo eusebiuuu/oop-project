@@ -20,7 +20,7 @@ vector<Station*> readNStations() {
     cin >> statCount;
     for (int i = 0; i < statCount; ++i) {
         auto* stat = new Station();
-        cin >> *stat;
+        cin >> stat;
         stations.push_back(stat);
     }
     return stations;
@@ -41,17 +41,17 @@ void readNRoutes(const vector<Station*>& stations, World* world) {
         if (type == 1) {
             auto bus = new Bus();
             cin >> bus;
-            auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], bus);
+            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], bus);
             world->addRoute(currRoute);
         } else if (type == 2) {
             auto train = new Train();
             cin >> train;
-            auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], train);
+            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], train);
             world->addRoute(currRoute);
         } else {
             auto plane = new Plane();
             cin >> plane;
-            auto* currRoute = new Route(length, *stations[idxStat1 - 1], *stations[idxStat2 - 1], plane);
+            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], plane);
             world->addRoute(currRoute);
         }
     }
@@ -78,7 +78,7 @@ Ticket buyTicket(const vector<Customer*>& customers, World *world) {
     }
     const vector<string> possibleTypes = {"bus", "plane", "train"};
     string customerID;
-    Station stat1(""), stat2("");
+    auto *stat1 = new Station(), *stat2 = new Station();
     cin >> customerID >> stat1 >> stat2;
     int badCount, neededSeats;
     cin >> badCount;
@@ -141,7 +141,7 @@ int main() {
         } else if (command == 5) {
             // print n objects
             for (const Station* station : stations) {
-                cout << *station;
+                cout << station;
             }
         } else if (command == 6) {
             world->printAllTransportMeans(*stations[0], *stations[1]);

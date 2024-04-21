@@ -1,7 +1,7 @@
 ## Workflow
 1. Requirements update check: [source 1](https://github.com/Ionnier/poo/tree/main) & [source 2](https://github.com/Ionnier/oop-template)
 2. Set the tasks list & incorporate the given tasks
-3. Solve the tasks (create new branch)
+3. Solve the tasks (create new branch) & TDD
 4. Review the project following the rules
     - No compilation errors or warnings (-Wall)
     - Use const everywhere
@@ -31,8 +31,9 @@
 - [x] Enrich the project description
 #### Part 2
 - [ ] Incorporate the given tasks
-- [ ] Singleton on Menu class
 - [ ] Refactor the project structure and coding style
+
+- [ ] Singleton on Menu class
 - [ ] Restructure the project logic (journeys, time etc.) & incorporate randomness
 - [ ] Integrate time component
 - [ ] Transportation logic improvements
