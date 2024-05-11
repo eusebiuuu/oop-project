@@ -48,7 +48,7 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
   * Possible routes are sorted by default based on price
 
 ### Given tasks
-##### Part 1
+#### Part 1
 - [x] definirea a minim **2-3 clase** care sa interactioneze in cadrul temei alese (fie prin compunere, agregare sau doar sa apeleze metodele celeilalte intr-un mod logic) (5p)
   - pentru o clasă:
     - [x] constructori de inițializare (customer.h)
@@ -68,7 +68,7 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
 - funcționalitatea creată să folosească metode ale obiectului generic
 - ar fi bine ca relația de agregare să fie făcută cu un obiect general în stilul celor de mai sus ^
 
-##### Part 2
+#### Part 2
 - [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp` [(0.5p)](https://github.com/Ionnier/poo/tree/main/proiect/P01#separarea-implement%C4%83rii-metodelor-din-clase)
 - [x] cât mai multe `const` [(0.5p)](https://github.com/Ionnier/poo/tree/main/labs/L04#reminder-const-everywhere)
 - [x] moșteniri [(5p)](https://github.com/Ionnier/poo/tree/main/labs/L04#exemplu):
@@ -95,3 +95,18 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
   - derivata nu poate fi una ștearsă și rescrisă
   - derivata va avea date membre noi + o modificare de comportament pe una dintre funcțiile virtuale
 - [x] Add more tests
+
+#### Part 3
+- Clase template (2p)
+  - [ ] crearea unei ierarhii de clase template cu minim 2 clase
+  - [ ] ilustrarea RTTI pe clase template
+  - [ ] instanțieri cu logică a claselor create
+- STL (2p)
+  - [ ] utilizarea a două structuri (containere) din (fără vector)
+  - [ ] utilizarea a unui algoritm cu funcție lambda (de exemplu, sort, transform)
+- Design Patterns (2p)
+  - [ ] utilizarea a două șabloane de proiectare
+- Prezentare (4p)
+  - [ ] răspunsuri la întrebări din cod / generale C++
+  - [ ] explicarea a unei alte structuri sau a altui algoritm neutilizat (STL)
+  - [ ] explicarea a altor două șabloane de proiectare

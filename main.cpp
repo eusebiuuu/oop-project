@@ -141,7 +141,7 @@ int main() {
         } else if (command == 5) {
             // print n objects
             for (const Station* station : stations) {
-                cout << station;
+                cout << station;;;
             }
         } else if (command == 6) {
             world->printAllTransportMeans(*stations[0], *stations[1]);

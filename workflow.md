@@ -31,10 +31,11 @@
 - [x] Incorporate the given tasks
 
 ### Part 3
+- [ ] Incorporate the given tasks
 - [ ] Refactor the project structure and coding style
 - [ ] Refactor the workflow
-- [ ] [Mock tests](https://github.com/Ionnier/poo/tree/main/proiect/P03#mocking)
-- [ ] Singleton on Menu class
+
+### Extra ???
 - [ ] Restructure the project logic (journeys, time etc.) & incorporate randomness
 - [ ] Integrate time component
 - [ ] Transportation logic improvements
