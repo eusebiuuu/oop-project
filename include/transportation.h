@@ -1,6 +1,7 @@
 #ifndef OOP_TRANSPORTATION_H
 #define OOP_TRANSPORTATION_H
 
+#include <queue>
 #include "vector"
 #include "string"
 
@@ -28,7 +29,7 @@ public:
 
     Transportation &operator=(const Transportation &);
 
-    void occupySeats(const std::vector<int> &);
+    void occupySeats(std::queue<int>);
 
     [[nodiscard]] std::vector<int> showAllFreeSeats() const;
 

@@ -1,19 +1,22 @@
 #include "customer.h"
 #include <algorithm>
 #include "iostream"
+#include "queue"
 #include "bus.h"
 #include "train.h"
 #include "plane.h"
 #include "check-exception.h"
 #include "invalid-datatype.h"
 
-Customer::Customer(const std::string& citizenID, const std::string& fullName) {
+template<typename T1>
+Customer<T1>::Customer(const T1& citizenID, const std::string& fullName) {
     this->citizenID = citizenID;
     this->fullName = fullName;
 }
 
 // downcast 1
-std::vector<Route*> Customer::getSuitableRoutes(const Station *stat1, const Station *stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
+template<typename T1>
+std::vector<Route*> Customer<T1>::getSuitableRoutes(const Station *stat1, const Station *stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route*> allRoutes = world->getRoutes()[stat1->getName()], suitableRoutes;
     for (Route* route : allRoutes) {
         if ((int) route->getTransport()->showAllFreeSeats().size() < neededSeats) {
@@ -43,9 +46,15 @@ std::vector<Route*> Customer::getSuitableRoutes(const Station *stat1, const Stat
     return suitableRoutes;
 }
 
-Ticket Customer::buyTicket(const Station *stat1, const Station *stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
+template<typename T1>
+Ticket Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, World *world, std::vector<std::string>& preferredTransport, int neededSeats) {
     std::vector<Route*> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
-    std::sort(suitableRoutes.begin(), suitableRoutes.end());
+    std::sort(suitableRoutes.begin(), suitableRoutes.end(), [](Route *route1, Route *route2) {
+        if (route1->getPrice() != route2->getPrice()) {
+            return route1->getDuration() < route2->getDuration();
+        }
+        return route1 < route2;
+    });
 //    cout << suitableRoutes.size() << '\n';
     if (suitableRoutes.empty()) {
         std::cout << "There is no available transportation on the chosen route:((\n";
@@ -82,33 +91,38 @@ Ticket Customer::buyTicket(const Station *stat1, const Station *stat2, World *wo
     //     std::cout << seat << ' ';
     // }
     // std::cout << '\n';
-    std::vector<int> seatsToOccupy(neededSeats);
+    std::queue<int> seatsToOccupy;
     for (int i = 0; i < neededSeats; ++i) {
-        seatsToOccupy[i] = freeSeats[i];
+        seatsToOccupy.push(freeSeats[i]);
     }
     currTransport->occupySeats(seatsToOccupy);
     double currPrice = chosenRoute->getPrice();
-    Ticket boughtTicket(*stat1, *stat2, currPrice, seatsToOccupy);
+    TicketBuilder builder;
+    Ticket boughtTicket = builder.setOrigin(*stat1).setDestination(*stat2).setPrice(currPrice).setSeats(seatsToOccupy).build();
     std::cout << boughtTicket.getTotalPrice() << '\n';
     this->purchasedTickets.push_back(boughtTicket);
     return boughtTicket;
 }
 
-std::istream &operator>>(std::istream &in, Customer &customer) {
-    customer.read(in);
+template<typename T>
+std::istream &operator>>(std::istream &in, Customer<T> *customer) {
+    customer->read(in);
     return in;
 }
 
-Customer &Customer::operator=(const Customer &customer) {
+template<typename T1>
+Customer<T1> &Customer<T1>::operator=(const Customer<T1> &customer) {
     this->fullName = customer.fullName;
     this->citizenID = customer.citizenID;
     return *this;
 }
 
-void Customer::read(std::istream &in) {
+template<typename T1>
+void Customer<T1>::read(std::istream &in) {
     in >> this->citizenID >> this->fullName;
 }
 
-const std::string &Customer::getCitizenId() const {
+template<typename T1>
+const T1 &Customer<T1>::getCitizenId() const {
     return citizenID;
 }

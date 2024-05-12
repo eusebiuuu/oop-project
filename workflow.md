@@ -1,12 +1,8 @@
 ## Workflow
 1. Requirements update check: [source 1](https://github.com/Ionnier/poo/tree/main) & [source 2](https://github.com/Ionnier/oop-template)
 2. Set the tasks list
-   - Incorporate the given tasks
-   - Incorporate desired goals
 3. Create new branch & solve the tasks
 4. Review the work following the rules
-    - No compilation errors or warnings (-Wall)
-    - Use const everywhere
     - Security: no global variables, all data is private
     - Make sure there is enough input data in "tastatura.txt" anytime
     - Check all the IDE's indications

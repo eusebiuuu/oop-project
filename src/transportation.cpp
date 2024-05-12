@@ -8,9 +8,11 @@
     this->speed = speed;
 }
 
-void Transportation::occupySeats(const std::vector<int> &seatsToBeOccupied) {
-    for (int x : seatsToBeOccupied) {
-        this->occupiedSeats[x] = true;
+void Transportation::occupySeats(std::queue<int> seatsToBeOccupied) {
+    while (!seatsToBeOccupied.empty()) {
+        int currSeat = seatsToBeOccupied.back();
+        this->occupiedSeats[currSeat] = true;
+        seatsToBeOccupied.pop();
     }
 }
 

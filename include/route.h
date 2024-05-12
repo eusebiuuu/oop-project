@@ -36,10 +36,10 @@ public:
 
     ~Route() {
         delete transport;
-//        delete origin;
-//        delete destination;
         timetable.clear();
     }
+
+    [[nodiscard]] int getDuration() const;
 };
 
 #endif //OOP_ROUTE_H

@@ -5,6 +5,8 @@ Los-Angeles
 Madrid
 Beijing
 
+7
+
 2
 5
 100
@@ -27,20 +29,22 @@ Beijing
 1
 1000 Alex-Andrei
 
-3
+4
 2
 1001 Romica-Ion elder
 
-4
+5
 1000 Madrid Beijing
 3
 bus train plane
 1
 
-4
-1000 New-York Los-Angeles
+6
+1001 New-York Los-Angeles
 2
 plane train
 1
 
-7
+8
+
+9

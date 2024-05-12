@@ -98,14 +98,14 @@ Welcome to "Ticketist", the app to rule all the ticket management systems. I hav
 
 #### Part 3
 - Clase template (2p)
-  - [ ] crearea unei ierarhii de clase template cu minim 2 clase
-  - [ ] ilustrarea RTTI pe clase template
-  - [ ] instanțieri cu logică a claselor create
+  - [x] crearea unei ierarhii de clase template cu minim 2 clase (customer & discountCustomer)
+  - [x] ilustrarea RTTI pe clase template (menu.cpp - readCustomer and buyTicket)
+  - [x] instanțieri cu logică a claselor create (menu.cpp - controlPanel)
 - STL (2p)
-  - [ ] utilizarea a două structuri (containere) din (fără vector)
-  - [ ] utilizarea a unui algoritm cu funcție lambda (de exemplu, sort, transform)
+  - [x] utilizarea a două structuri (containere) din (fără vector): world.h (unordered_map), customer.cpp - buyTicket (queue)
+  - [x] utilizarea a unui algoritm cu funcție lambda (de exemplu, sort, transform): customer.cpp - buyTicket sort
 - Design Patterns (2p)
-  - [ ] utilizarea a două șabloane de proiectare
+  - [x] utilizarea a două șabloane de proiectare (Menu - singleton & Ticket - builder)
 - Prezentare (4p)
   - [ ] răspunsuri la întrebări din cod / generale C++
   - [ ] explicarea a unei alte structuri sau a altui algoritm neutilizat (STL)

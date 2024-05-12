@@ -3,14 +3,6 @@
 
 int Ticket::ticketsCount = 0;
 
-Ticket::Ticket(const Station &origin, const Station &dest, const double &price, const std::vector<int> &seats) {
-    this->origin = origin;
-    this->destination = dest;
-    this->seats = seats;
-    this->totalPrice = price;
-    this->ticketID = Ticket::ticketsCount++;
-}
-
 double Ticket::getTotalPrice() const {
     return totalPrice;
 }
