@@ -16,11 +16,11 @@ void World::printAllTransportMeans(const Station& stat1, const Station& stat2) {
         if (route->getDestination()->getName() != stat2.getName()) {
             continue;
         }
-        if (auto bus = dynamic_cast<Bus*>(route->getTransport())) {
+        if (const auto bus = dynamic_cast<Bus*>(route->getTransport())) {
             std::cout << *bus;
-        } else if (auto train = dynamic_cast<Train*>(route->getTransport())) {
+        } else if (const auto train = dynamic_cast<Train*>(route->getTransport())) {
             std::cout << *train;
-        } else if (auto plane = dynamic_cast<Plane*>(route->getTransport())) {
+        } else if (const auto plane = dynamic_cast<Plane*>(route->getTransport())) {
             std::cout << *plane;
         }
     }

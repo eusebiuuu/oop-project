@@ -6,9 +6,9 @@
 #include "discount-customer.h"
 
 TEST(CustomerOverview, CustomerCreation) {
-    auto* customer = new Customer("1000", "John");
+    auto* customer = new Customer<string>("1000", "John");
     EXPECT_EQ(customer->getCitizenId(), "1000");
-    Customer* copyCustomer = customer;
+    Customer<string>* copyCustomer = customer;
     EXPECT_EQ(copyCustomer->getCitizenId(), "1000");
     delete customer;
 }
