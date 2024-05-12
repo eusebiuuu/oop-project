@@ -56,7 +56,3 @@ bool operator<(const Route &route1, const Route &route2) {
     return route1.duration < route2.duration;
 }
 
-int Route::getDuration() const {
-    return duration;
-}
-

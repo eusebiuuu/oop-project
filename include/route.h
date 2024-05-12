@@ -38,8 +38,6 @@ public:
         delete transport;
         timetable.clear();
     }
-
-    [[nodiscard]] int getDuration() const;
 };
 
 #endif //OOP_ROUTE_H
