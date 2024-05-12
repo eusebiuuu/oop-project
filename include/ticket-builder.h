@@ -20,7 +20,7 @@ public:
         return *this;
     }
 
-    TicketBuilder &setPrice(double &price) {
+    TicketBuilder &setPrice(const double &price) {
         this->ticket.totalPrice = price;
         return *this;
     }

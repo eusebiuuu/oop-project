@@ -51,7 +51,7 @@ Ticket Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, World
     std::vector<Route*> suitableRoutes = getSuitableRoutes(stat1, stat2, world, preferredTransport, neededSeats);
     std::sort(suitableRoutes.begin(), suitableRoutes.end(), [](Route *route1, Route *route2) {
         if (route1->getPrice() != route2->getPrice()) {
-            return route1->getDuration() < route2->getDuration();
+            return route1->getPrice() < route2->getPrice();
         }
         return route1 < route2;
     });
