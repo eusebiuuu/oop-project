@@ -53,6 +53,6 @@ std::istream &operator>>(std::istream &in, Route &route) {
 }
 
 bool operator<(const Route &route1, const Route &route2) {
-    return route1.price < route2.price;
+    return route1.duration < route2.duration;
 }
 

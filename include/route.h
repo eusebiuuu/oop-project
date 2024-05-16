@@ -36,8 +36,6 @@ public:
 
     ~Route() {
         delete transport;
-//        delete origin;
-//        delete destination;
         timetable.clear();
     }
 };

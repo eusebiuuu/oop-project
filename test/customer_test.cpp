@@ -1,14 +1,15 @@
 #include <gtest/gtest.h>
 #include "customer.h"
+#include "customer.cpp"
 #include "route.h"
 #include "transportation.h"
 #include "world.h"
-#include "discount-customer.h"
+#include "discount-customer.cpp"
 
 TEST(CustomerOverview, CustomerCreation) {
-    auto* customer = new Customer("1000", "John");
+    auto* customer = new Customer<string>("1000", "John");
     EXPECT_EQ(customer->getCitizenId(), "1000");
-    Customer* copyCustomer = customer;
+    Customer<string>* copyCustomer = customer;
     EXPECT_EQ(copyCustomer->getCitizenId(), "1000");
     delete customer;
 }
@@ -25,7 +26,7 @@ TEST(BuyTicket, CheckTheSortingAndFiltering) {
     EXPECT_EQ(route1->getTransport()->getModel(), "Solaris");
     world->addRoute(route1);
     world->addRoute(route2);
-    auto* customer = new Customer("1000", "John");
+    auto* customer = new Customer<string>("1000", "John");
     std::vector<std::string> preferredTransport = {"bus", "train"};
     Ticket ticket = customer->buyTicket(station1, station2, world, preferredTransport);
     EXPECT_EQ((int) ticket.getTotalPrice(), 20);
