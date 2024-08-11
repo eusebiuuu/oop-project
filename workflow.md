@@ -1,6 +1,5 @@
 ### Project plan
 1. Tasks
-   - Test the project and add input file & push to GitHub
    - Refactor the transportation logic (same seats on the same transport)
    - Integrate time component
 2. Project description

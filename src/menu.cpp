@@ -59,7 +59,7 @@ void Menu::controlPanel() {
             }
         } else if (command == 7) {
             try {
-                for (const auto t : transports) {
+                for (const auto *t : transports) {
                     cout << *t;
                 }
             } catch (std::exception &err) {
