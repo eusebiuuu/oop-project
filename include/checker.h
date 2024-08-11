@@ -1,4 +1,5 @@
 #include "stdexcept"
+#include "algorithm"
 
 template<class T>
 class Checker {

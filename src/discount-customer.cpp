@@ -11,7 +11,7 @@ template<typename T1, typename T2>
 
 template<typename T1, typename T2>
 Journey *DiscountCustomer<T1, T2>::buyTicket(const Station *stat1, const Station *stat2, World *world, std::vector<std::string> &preferredTransport, const int &neededSeats, const int &tW, const int &pW) {
-    Journey *j = this->buyTicket(stat1, stat2, world, preferredTransport, neededSeats, tW, pW);
+    Journey *j = Customer<T1>::buyTicket(stat1, stat2, world, preferredTransport, neededSeats, tW, pW);
     *j *= this->discount;
     return j;
 }

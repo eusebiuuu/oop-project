@@ -2,6 +2,7 @@
 #include "checker.h"
 #include "iostream"
 #include "config.h"
+#include "algorithm"
 
 int Transportation::transportCount = 0;
 
@@ -74,6 +75,7 @@ Transportation& Transportation::operator=(const Transportation &transport) {
         this->price = transport.price;
         this->type = transport.type;
         this->model = transport.model;
+        this->transportID = transport.transportID;
     }
     return *this;
 }
