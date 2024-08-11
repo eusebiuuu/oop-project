@@ -13,9 +13,6 @@ class World {
 public:
     World() = default;
 
-    // print n objects
-    void printAllTransportMeans(const Station&, const Station&);
-
     void addRoute(Route*);
 
     unordered_map<string, vector<Route*>> &getRoutes();

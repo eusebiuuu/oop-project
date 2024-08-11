@@ -4,21 +4,17 @@
 #include "station.h"
 #include "string"
 #include "transportation.h"
-#include "bus.h"
-#include "train.h"
-#include "plane.h"
 
 class Route {
     static int routeCount;
-    Station *origin{}, *destination{};
-    int routeID = 0, duration = 0, length = 0;
-    double price{};
-    std::vector<std::string> timetable;
-    Transportation* transport{};
+    Station *origin, *destination;
+    int routeID, duration, length;
+    double price;
+    Transportation *transport;
 public:
-    Route(int &, Station *, Station *, Transportation*);
+    Route(const int &, Station *, Station *, Transportation *, const int &);
 
-    Route() = default;
+    Route(): origin(), destination(), routeID(routeCount++), duration(0), length(0), price(0), transport() {}
 
     friend std::ostream& operator<<(std::ostream &, const Route &);
 
@@ -26,18 +22,19 @@ public:
 
     [[nodiscard]] Transportation* getTransport() const;
 
-    [[nodiscard]] const Station *getOrigin() const;
+    [[nodiscard]] Station *getOrigin() const;
 
-    [[nodiscard]] const Station *getDestination() const;
+    [[nodiscard]] Station *getDestination() const;
 
-    friend std::istream& operator>>(std::istream &, Route &);
+    friend bool operator<(const Route &, const Route &);
 
-    friend bool operator<(const Route&, const Route &);
+    [[nodiscard]] int getDuration() const;
 
-    ~Route() {
-        delete transport;
-        timetable.clear();
-    }
+    static int getRouteCount();
+
+    [[nodiscard]] int getRouteId() const;
+
+    [[nodiscard]] int getLength() const;
 };
 
 #endif //OOP_ROUTE_H

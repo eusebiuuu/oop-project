@@ -6,11 +6,13 @@
 
 
 class Station {
+    static int stationCount;
     std::string name;
+    int stationID;
 public:
     explicit Station(const std::string &);
 
-    Station() = default;
+    Station(): stationID(stationCount++) {}
 
     [[nodiscard]] const std::string &getName() const;
 
@@ -18,7 +20,9 @@ public:
 
     friend std::ostream& operator<<(std::ostream&, const Station *);
 
-    ~Station() = default;
+    static int getStationCount();
+
+    [[nodiscard]] int getStationId() const;
 };
 
 #endif //OOP_STATION_H

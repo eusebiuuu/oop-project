@@ -1,26 +1,31 @@
 #include "discount-customer.h"
+#include "config.h"
 
 template<typename T1, typename T2>
 [[maybe_unused]] DiscountCustomer<T1, T2>::DiscountCustomer(std::string& citizenID,
                                    std::string& fullName,
                                    const std::string& type):
                                    Customer<T1>(citizenID, fullName) {
-    this->discount = discounts[type];
+    this->discount = Config::discounts.at(type);
 }
 
 template<typename T1, typename T2>
-Ticket DiscountCustomer<T1, T2>::buyDiscountTicket(const Station* stat1, const Station* stat2, World *world,
-                 std::vector<std::string>& transport, int seats) {
-    Ticket ticket = this->buyTicket(stat1, stat2, world, transport, seats);
-    ticket *= (double) this->discount;
-    return ticket;
+Journey *DiscountCustomer<T1, T2>::buyTicket(const Station *stat1, const Station *stat2, World *world, std::vector<std::string> &preferredTransport, const int &neededSeats, const int &tW, const int &pW) {
+    Journey *j = this->buyTicket(stat1, stat2, world, preferredTransport, neededSeats, tW, pW);
+    *j *= this->discount;
+    return j;
 }
 
 template<typename T1, typename T2>
 void DiscountCustomer<T1, T2>::read(std::istream &in) {
+    cout << "Citizen ID: \n";
+    in >> this->citizenID;
+    cout << "Full name: \n";
+    in >> this->fullName;
+    cout << "Type of customer (student / elder / family / donor / scholar_group): \n";
     std::string type;
-    in >> this->citizenID >> this->fullName >> type;
-    this->discount = discounts[type];
+    in >> type;
+    this->discount = Config::discounts.at(type);
 }
 
 template<typename T1, typename T2>

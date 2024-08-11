@@ -1,16 +1,15 @@
 #include "menu.h"
 
 void Menu::printMenu() {
-    std::cout << "Interactions:\n";
-    std::cout << "1: Add n station\n";
-    std::cout << "2: Add n routes (between existing stations)\n";
-    std::cout << "3: Add customer with string id\n";
-    std::cout << "4: Add customer with int id\n";
-    std::cout << "5: Buy ticket - customers with string id\n";
-    std::cout << "6: Buy ticket - customers with int id \n";
-    std::cout << "7: Print all the stations\n";
-    std::cout << "8: Print all transportation\n";
-    std::cout << "9: Exit\n";
+    std::cout << "\nInstructions:\n";
+    std::cout << "1: Add station\n";
+    std::cout << "2: Add route\n";
+    std::cout << "3: Add customer\n";
+    std::cout << "4: Add transport\n";
+    std::cout << "5: Buy ticket\n";
+    std::cout << "6: Print all the stations\n";
+    std::cout << "7: Print all transportation\n";
+    std::cout << "8: Exit\n";
 }
 
 void Menu::controlPanel() {
@@ -19,137 +18,159 @@ void Menu::controlPanel() {
         printMenu();
         cin >> command;
         if (command == 1) {
-            stations = readNStations();
+            try {
+                readStation();
+            } catch (const std::exception &err) {
+                cerr << err.what() << '\n';
+            }
         } else if (command == 2) {
-            readNRoutes();
+            try {
+                readRoute();
+            } catch (const std::exception &err) {
+                cerr << err.what() << '\n';
+            }
         } else if (command == 3) {
-            customersStr.push_back(readCustomer<string, int>());
+            try {
+                customers.push_back(readCustomer<string, int>());
+            } catch (const std::exception &err) {
+                cerr << err.what() << '\n';
+            }
         } else if (command == 4) {
-            customersInt.push_back(readCustomer<int, double>());
+            try {
+                addTransportation();
+            } catch (const std::exception &err) {
+                cerr << err.what() << '\n';
+            }
         } else if (command == 5) {
             try {
-                Ticket ticket = buyTicket(customersStr);
-                cout << ticket << '\n';
-                const Ticket& copyTicket(ticket);
-                cout << '\n' << copyTicket;
-            } catch (TransportationException &err) {
-                cerr << err.what() << '\n';
+                Journey *j = buyTicket<string>();
+                cout << j << '\n';
+                journeys.push_back(j);
             } catch (std::exception &err) {
-                cerr << "Unknown error occurred: " << err.what() << '\n';
-                break;
+                cerr << err.what() << '\n';
             }
         } else if (command == 6) {
             try {
-                Ticket ticket = buyTicket(customersInt);
-                cout << ticket << '\n';
-                const Ticket& copyTicket(ticket);
-                cout << '\n' << copyTicket;
-            } catch (TransportationException &err) {
-                cerr << err.what() << '\n';
+                for (const Station* station : stations) {
+                    cout << station;
+                }
             } catch (std::exception &err) {
-                cerr << "Unknown error occurred: " << err.what() << '\n';
-                break;
+                cerr << err.what() << '\n';
             }
         } else if (command == 7) {
-            // print n objects
-            for (const Station* station : stations) {
-                cout << station;
+            try {
+                for (const auto t : transports) {
+                    cout << *t;
+                }
+            } catch (std::exception &err) {
+                cerr << err.what() << '\n';
             }
-        } else if (command == 8) {
-            world->printAllTransportMeans(*stations[0], *stations[1]);
         }
-    } while (command != 9);
+    } while (command != 8);
 }
 
-vector<Station*> Menu::readNStations() {
-    int statCount;
-    cout << "Stations count: ";
-    cin >> statCount;
-    for (int i = 0; i < statCount; ++i) {
-        auto* stat = new Station();
-        cin >> stat;
-        stations.push_back(stat);
+void Menu::readStation() {
+    auto* stat = new Station();
+    cin >> stat;
+    cout << stat;
+    stations.push_back(stat);
+}
+
+void Menu::readRoute() {
+    int length, duration, transportID;
+    cout << "Enter the route length: \n";
+    cin >> length;
+    cout << "Duration (in minutes): \n";
+    cin >> duration;
+    cout << "Transport ID: \n";
+    cin >> transportID;
+    auto actualStations = getStations();
+    auto iter = std::find_if(transports.begin(), transports.end(), [transportID](Transportation *t) {
+        return t->getTransportId() == transportID;
+    });
+    if (iter == transports.end()) {
+        throw std::runtime_error("Invalid transportation ID");
     }
-    return stations;
+    auto *transport = *iter;
+    world->addRoute(new Route(length, actualStations[0], actualStations[1], transport, duration));
 }
 
-void Menu::readNRoutes() {
-    int routesCount;
-    cout << "Routes count: ";
-    cin >> routesCount;
-    // read n objects
-    for (int i = 0; i < routesCount; ++i) {
-        int length, idxStat1, idxStat2;
-        cin >> length >> idxStat1 >> idxStat2;
-        cout << "1 - bus | 2 - train | 3 - plane\n";
-        // upcast
-        int type;
-        cin >> type;
-        if (type == 1) {
-            auto bus = new Bus();
-            cin >> bus;
-            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], bus);
-            world->addRoute(currRoute);
-        } else if (type == 2) {
-            auto train = new Train();
-            cin >> train;
-            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], train);
-            world->addRoute(currRoute);
-        } else {
-            auto plane = new Plane();
-            cin >> plane;
-            auto* currRoute = new Route(length, stations[idxStat1 - 1], stations[idxStat2 - 1], plane);
-            world->addRoute(currRoute);
+std::array<Station *, 2> Menu::getStations() {
+    auto getActualStation = [this](const string &station) {
+        auto ans = std::find_if(stations.begin(), stations.end(), [station](Station *s) {
+            return s->getName() == station;
+        });
+        if (ans == stations.end()) {
+            throw std::runtime_error("Station doesn't exist");
         }
-    }
+        return *ans;
+    };
+    string station1, station2;
+    cout << "Enter the start station name: \n";
+    cin >> station1;
+    auto actualStat1 = getActualStation(station1);
+    cout << "Enter the finish station name: \n";
+    cin >> station2;
+    auto actualStat2 = getActualStation(station2);
+    return {actualStat1, actualStat2};
 }
 
-// upcast with pointers on template classes
+void Menu::addTransportation() {
+    auto *transport = new Transportation();
+    cin >> transport;
+    transports.push_back(transport);
+    cout << "Transport added successfully!\n";
+}
+
 template<typename T, typename U>
 Customer<T>* Menu::readCustomer() {
-    int customerType;
+    std::string customerType;
+    std::cout << "Type of customer (normal / discount): \n";
     cin >> customerType;
-    if (customerType == 1) {
+    if (customerType == "normal") {
         auto* customer = new Customer<T>();
         cin >> customer;
         return customer;
+    } else if (customerType == "discount") {
+        auto* customer = new DiscountCustomer<T, U>();
+        cin >> customer;
+        DiscountCustomer<T, U>* auxCustomer = customer;
+        return auxCustomer;
+    } else {
+        throw std::runtime_error("Invalid customer type");
     }
-    auto* customer = new DiscountCustomer<T, U>();
-    cin >> customer;
-    DiscountCustomer<T, U>* auxCustomer = customer;
-    return auxCustomer;
 }
 
-// downcast
 template<typename T>
-Ticket Menu::buyTicket(const vector<Customer<T>*>& customers) {
+Journey *Menu::buyTicket() {
     if (customers.empty()) {
         throw std::invalid_argument("Customers array must not be empty");
     }
-    const vector<string> possibleTypes = {"bus", "plane", "train"};
     T customerID;
-    Station stat1, stat2;
-    cin >> customerID >> &stat1 >> &stat2;
-    int badCount, neededSeats;
-    cin >> badCount;
-    vector<string> badTransport(badCount);
-    for (int i = 0; i < badCount; ++i) {
-        cin >> badTransport[i];
-        if (std::count(possibleTypes.begin(), possibleTypes.end(), badTransport[i]) == 0) {
-            throw std::logic_error("Invalid transportation");
-        }
+    cout << "Insert the customer ID: \n";
+    cin >> customerID;
+    auto currCustomer = std::find_if(customers.begin(), customers.end(), [customerID](const Customer<T> *c) {
+        return c->getCitizenId() == customerID;
+    });
+    if (currCustomer == customers.end()) {
+        throw std::runtime_error("Customer doesn't exist");
     }
+    auto actualStations = getStations();
+    int preferredTransportCount, neededSeats;
+    cout << "Preferred transportation (count and list, 0 means no preference): \n";
+    cin >> preferredTransportCount;
+    vector<string> preferredTransport(preferredTransportCount);
+    for (int i = 0; i < preferredTransportCount; ++i) {
+        cin >> preferredTransport[i];
+    }
+    int timeWeight, priceWeight;
+    cout << "Enter the price and time weights to get the optimal route: \n";
+    cout << "Time weight: \n";
+    cin >> timeWeight;
+    cout << "Price weight: \n";
+    cin >> priceWeight;
+    cout << "Enter the number of seats to book: \n";
     cin >> neededSeats;
-    for (Customer<T> *customer: customers) {
-        if (customer->getCitizenId() != customerID) {
-            continue;
-        }
-        if (auto specialCustomer = dynamic_cast<DiscountCustomer<T, int> *>(customer)) {
-            auto ticket = specialCustomer->buyDiscountTicket(&stat1, &stat2, world, badTransport, neededSeats);
-            delete specialCustomer;
-            return ticket;
-        }
-        return customer->buyTicket(&stat1, &stat2, world, badTransport, neededSeats);
-    }
-    return Ticket{};
+    return (*currCustomer)->buyTicket(actualStations[0], actualStations[1], world, preferredTransport, neededSeats,
+                                      timeWeight, priceWeight);
 }

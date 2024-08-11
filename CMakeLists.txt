@@ -112,6 +112,8 @@ add_executable(${PROJECT_NAME} main.cpp ${SOURCES}
         src/ticket.cpp
         src/transportation.cpp
         src/world.cpp
+        include/config.h
+        include/journey.h
 )
 
 ###############################################################################
@@ -173,6 +175,7 @@ add_executable(
         src/ticket.cpp
         src/transportation.cpp
         src/world.cpp
+        src/config.cpp
 )
 
 target_link_libraries(

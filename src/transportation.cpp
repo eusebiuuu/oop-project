@@ -1,36 +1,54 @@
 #include "transportation.h"
+#include "checker.h"
 #include "iostream"
+#include "config.h"
 
-[[maybe_unused]] Transportation::Transportation(const int &totalSeats, const double &price, const int &speed) {
-    this->occupiedSeats = std::vector<bool>(totalSeats);
-    this->totalSeats = totalSeats;
-    this->price = price;
-    this->speed = speed;
-}
+int Transportation::transportCount = 0;
 
-void Transportation::occupySeats(std::queue<int> seatsToBeOccupied) {
-    while (!seatsToBeOccupied.empty()) {
-        int currSeat = seatsToBeOccupied.back();
-        this->occupiedSeats[currSeat] = true;
-        seatsToBeOccupied.pop();
+[[maybe_unused]] Transportation::Transportation(const int &totalSeats, const double &price, const std::string &model, const std::string &type):
+    price(price), totalSeats(totalSeats), transportID(transportCount++), type(type), model(model),
+    seatsState(std::vector<std::vector<int>>(totalSeats)) {}
+
+void Transportation::occupySeats(const std::vector<int> &seatsToBeOccupied, const int &currRoute) {
+    for (auto seat : seatsToBeOccupied) {
+        this->seatsState[seat].push_back(currRoute);
     }
 }
 
-std::vector<int> Transportation::showAllFreeSeats() const {
+std::vector<int> Transportation::getAllFreeSeats(const int &currRoute) const {
     std::vector<int> freeSeats;
-//    std::cout << occupiedSeats.size() << '\n';
-    // std::cout << sizeof(occupiedSeats) <<'\n';
-    for (int i = 1; i <= this->totalSeats; ++i) {
-        if (!occupiedSeats[i - 1]) {
+    for (int i = 0; i < this->totalSeats; ++i) {
+        if (seatsState[i].empty()) {
+            freeSeats.push_back(i);
+            continue;
+        }
+        auto iter = std::find(seatsState[i].begin(), seatsState[i].end(), currRoute);
+        if (iter == seatsState[i].end()) {
             freeSeats.push_back(i);
         }
     }
-//    std::cout << freeSeats.size() << '\n';
     return freeSeats;
 }
 
-int Transportation::getSpeed() const {
-    return this->speed;
+void Transportation::read(std::istream &in) {
+    std::cout << "Total seats: \n";
+    in >> totalSeats;
+    this->seatsState = std::vector<std::vector<int>>(totalSeats);
+    std::cout << "Price per km: \n";
+    in >> price;
+    std::cout << "Transportation type (bus / train / plane / subway): \n";
+    in >> type;
+    Checker<std::string>::throwIfNotInList(type, Config::validTransportTypes, "Invalid transportation type");
+    std::cout << "Model: \n";
+    in >> model;
+}
+
+void Transportation::print(std::ostream &out) const {
+    out << "Transport ID: " << transportID << '\n';
+    out << "Total seats: " << totalSeats << '\n';
+    out << "Price per km: " << price << '\n';
+    out << "Type: " << type << '\n';
+    out << "Model: " << model << '\n';
 }
 
 double Transportation::getPrice() const {
@@ -38,8 +56,8 @@ double Transportation::getPrice() const {
 }
 
 std::istream &operator>>(std::istream &in, Transportation* transportation) {
-    transportation->occupiedSeats.clear();
-    transportation->occupiedSeats = std::vector<bool>(transportation->totalSeats);
+    transportation->seatsState.clear();
+    transportation->seatsState = std::vector<std::vector<int>>(transportation->totalSeats);
     transportation->read(in);
     return in;
 }
@@ -51,17 +69,23 @@ std::ostream &operator<<(std::ostream &out, const Transportation &transportation
 
 Transportation& Transportation::operator=(const Transportation &transport) {
     if (this != &transport) {
-        this->speed = transport.speed;
         this->totalSeats = transport.totalSeats;
-        this->occupiedSeats = transport.occupiedSeats;
+        this->seatsState = transport.seatsState;
         this->price = transport.price;
+        this->type = transport.type;
+        this->model = transport.model;
     }
     return *this;
 }
 
 Transportation::~Transportation() {
-    occupiedSeats.clear();
-    totalSeats = 0;
-    price = 0.0;
-    speed = 0;
+    seatsState.clear();
+}
+
+const std::string &Transportation::getType() const {
+    return type;
+}
+
+int Transportation::getTransportId() const {
+    return transportID;
 }

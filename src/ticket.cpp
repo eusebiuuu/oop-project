@@ -7,23 +7,52 @@ double Ticket::getTotalPrice() const {
     return totalPrice;
 }
 
-std::ostream &operator<<(std::ostream &out, const Ticket &ticket) {
-    out << "Ticket ID: " << ticket.ticketID << '\n';
-    out << "Start: " << ticket.origin.getName() << '\n';
-    out << "Destination: " << ticket.destination.getName() << '\n';
+std::ostream &operator<<(std::ostream &out, const Ticket *ticket) {
+    out << "Ticket ID: " << ticket->getTicketId() << '\n';
+    out << "Start: " << ticket->getOrigin()->getName() << '\n';
+    out << "Destination: " << ticket->getDestination()->getName() << '\n';
     out << "Seats: ";
-    for (int seat : ticket.seats) {
+    for (int seat : ticket->getSeats()) {
         out << seat << ' ';
     }
-    out << "\nTotal price: " << ticket.totalPrice << '\n';
+    out << '\n';
+    out << "Total price: " << ticket->getTotalPrice() << '\n';
+    out << "Duration: " << ticket->getDuration() << '\n';
     return out;
 }
 
-Ticket Ticket::operator*=(double discount) {
-    totalPrice *= discount / 100.0;
+Ticket Ticket::operator*=(int discount) {
+    totalPrice *= (double) discount / 100.0;
     return *this;
 }
 
-const Station &Ticket::getOrigin() const {
+int Ticket::getDuration() const {
+    return duration;
+}
+
+const std::vector<int> &Ticket::getSeats() const {
+    return seats;
+}
+
+Station *Ticket::getOrigin() const {
     return origin;
+}
+
+Station *Ticket::getDestination() const {
+    return destination;
+}
+
+int Ticket::getTicketId() const {
+    return ticketID;
+}
+
+void Ticket::setSeats(const std::vector<int> &s) {
+    Ticket::seats = s;
+}
+
+void Ticket::updateTicket(const Route *r, const int &s) {
+    this->origin = r->getOrigin();
+    this->destination = r->getDestination();
+    this->duration = r->getDuration();
+    this->totalPrice = r->getPrice() * s;
 }

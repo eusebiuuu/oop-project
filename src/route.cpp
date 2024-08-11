@@ -2,20 +2,13 @@
 #include "iostream"
 #include "cmath"
 
-int const MIN_IN_HOUR = 60;
-//int const HOURS_IN_DAY = 24;
-
 int Route::routeCount = 0;
 
-Route::Route(int &length, Station *origin, Station *destination, Transportation* transport) {
-    this->length = length;
-    this->origin = origin;
-    this->destination = destination;
-    this->duration = (int) std::ceil((1.0 * length / transport->getSpeed()) * MIN_IN_HOUR);
-    this->price = length * transport->getPrice();
-    // std::cout << "Route constructor: " << transport->getModel() << '\n';
-    this->transport = transport;
-    this->routeID = Route::routeCount++;
+Route::Route(const int &length, Station *origin, Station *destination,
+             Transportation *transport, const int &duration):
+             origin(origin), destination(destination), routeID(routeCount++),
+             duration(duration), length(length), transport(transport) {
+    this->price = this->transport->getPrice() * length;
 }
 
 std::ostream& operator<<(std::ostream &out, const Route &route) {
@@ -36,23 +29,22 @@ Transportation* Route::getTransport() const {
     return this->transport;
 }
 
-const Station *Route::getOrigin() const {
+Station *Route::getOrigin() const {
     return origin;
 }
 
-const Station *Route::getDestination() const {
+Station *Route::getDestination() const {
     return destination;
-}
-
-std::istream &operator>>(std::istream &in, Route &route) {
-    in >> route.length >> route.origin >> route.destination >> route.transport;
-    route.price = route.length * route.transport->getPrice();
-    route.duration = (int) std::ceil((route.length / route.transport->getSpeed()) * MIN_IN_HOUR);
-    route.routeID = Route::routeCount++;
-    return in;
 }
 
 bool operator<(const Route &route1, const Route &route2) {
     return route1.duration < route2.duration;
 }
 
+int Route::getDuration() const {
+    return duration;
+}
+
+int Route::getRouteId() const {
+    return routeID;
+}

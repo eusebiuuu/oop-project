@@ -3,17 +3,12 @@
 
 #include <string>
 #include "ticket.h"
-#include "ticket-builder.h"
+#include "journey.h"
 #include "route.h"
 #include "world.h"
 #include <algorithm>
 #include "iostream"
 #include "queue"
-#include "bus.h"
-#include "train.h"
-#include "plane.h"
-#include "check-exception.h"
-#include "invalid-datatype.h"
 
 template<typename T1>
 class Customer {
@@ -22,13 +17,10 @@ protected:
     std::vector<Ticket> purchasedTickets;
     std::string fullName;
 public:
-    // overloading constructor
     Customer(const T1 &, const std::string&);
 
-    // initialisation constructor
     Customer() = default;
 
-    // read operator
     template<typename T>
     friend std::istream& operator>>(std::istream &, Customer<T> *);
 
@@ -36,9 +28,7 @@ public:
 
     Customer& operator=(const Customer<T1> &);
 
-    static std::vector<Route*> getSuitableRoutes(const Station *, const Station *, World*, std::vector<std::string>&, int);
-
-    Ticket buyTicket(const Station*, const Station*, World*, std::vector<std::string>&, int = 1);
+    virtual Journey *buyTicket(const Station *, const Station *, World*, std::vector<std::string> &, const int &, const int &, const int &);
 
     virtual ~Customer() = default;
 

@@ -13,36 +13,38 @@
 #include "discount-customer.cpp"
 #include "route.h"
 #include "world.h"
-#include "bus.h"
-#include "train.h"
-#include "plane.h"
 #include "exception"
-#include "transportation-exception.h"
 #include <algorithm>
+#include "array"
 
 class Menu {
 private:
     World* world;
-    vector<Station*> stations;
-    vector<Customer<string>*> customersStr;
-    vector<Customer<int>*> customersInt;
+    vector<Station *> stations;
+    vector<Customer<string> *> customers;
+    vector<Transportation *> transports;
+    vector<Journey *> journeys;
     Menu() {
         world = new World();
     };
     ~Menu() {
-        for (const auto* customer : customersStr) {
+        for (const auto* customer : customers) {
             delete customer;
         }
-        for (const auto* customer : customersInt) {
-            delete customer;
+        for (const Journey *j : journeys) {
+            delete j;
         }
-        customersStr.clear();
-        customersInt.clear();
         for (const Station* station : stations) {
             delete station;
         }
-        stations.clear();
+        for (const Transportation *t : transports) {
+            delete t;
+        }
         delete world;
+        customers.clear();
+        stations.clear();
+        transports.clear();
+        journeys.clear();
     }
 public:
 
@@ -60,14 +62,18 @@ public:
     void controlPanel();
 
     template<typename T>
-    Ticket buyTicket(const vector<Customer<T> *> &customers);
+    Journey *buyTicket();
 
     template<typename T, typename U = int>
     Customer<T>* readCustomer();
 
-    void readNRoutes();
+    void readRoute();
 
-    vector<Station *> readNStations();
+    void addTransportation();
+
+    std::array<Station *, 2> getStations();
+
+    void readStation();
 };
 
 #endif //OOP_MENU_H
