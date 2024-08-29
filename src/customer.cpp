@@ -20,7 +20,7 @@ struct TravelInfo {
     int transport_id;
     const Station *station;
     TravelInfo(): cost(0), seats(0), transport_id(-1), station() {}
-    TravelInfo(double c, const bitset<Config::MAX_SEATS> sts, int t, const Station *s): cost(c), seats(sts), transport_id(t), station(s) {}
+    TravelInfo(double c, const bitset<Config::MAX_SEATS> &sts, int t, const Station *s): cost(c), seats(sts), transport_id(t), station(s) {}
 };
 
 template<typename T1>
