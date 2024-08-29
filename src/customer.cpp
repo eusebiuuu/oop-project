@@ -4,6 +4,7 @@
 #include "transportation.h"
 #include "set"
 #include "checker.h"
+#include "bitset"
 
 int const INF = 2e9;
 
@@ -13,10 +14,23 @@ Customer<T1>::Customer(const T1& citizenID, const std::string& fullName) {
     this->fullName = fullName;
 }
 
+struct TravelInfo {
+    double cost;
+    bitset<Config::MAX_SEATS> seats;
+    int transport_id;
+    const Station *station;
+    TravelInfo(): cost(0), seats(0), transport_id(-1), station() {}
+    TravelInfo(double c, bitset<Config::MAX_SEATS> sts, int t, const Station *s): cost(c), seats(sts), transport_id(t), station(s) {}
+};
+
 template<typename T1>
 Journey *Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, World *world, std::vector<std::string> &preferredTransport, const int &neededSeats, const int &tW, const int &pW) {
-    std::set<std::pair<double, const Station *>> minCost;
-    minCost.insert({0, stat1});
+    auto compareInfo = [](TravelInfo a, TravelInfo b) {
+        return a.cost < b.cost;
+    };
+    set<TravelInfo, decltype(compareInfo)> minCost;
+    TravelInfo start(0, 0, -1, stat1);
+    minCost.insert(start);
     vector<std::pair<int, Route *>> prevStation(Station::getStationCount());
     vector<double> bestCost(Station::getStationCount(), INF);
     bestCost[stat1->getStationId()] = 0;
@@ -24,17 +38,23 @@ Journey *Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, Wor
     double ans = -1;
     auto worldMap = world->getRoutes();
     while (!minCost.empty()) {
-        double currCost = minCost.begin()->first;
-        auto currStat = minCost.begin()->second;
+        double currCost = minCost.begin()->cost;
+        auto currStat = minCost.begin()->station;
+        auto currSeats = minCost.begin()->seats;
+        auto currTransportID = minCost.begin()->transport_id;
         if (currStat->getStationId() == stat2->getStationId()) {
             ans = currCost;
             break;
         }
         minCost.erase(minCost.begin());
-        for (const auto currRoute : worldMap[currStat->getName()]) {
+        for (Route *currRoute : worldMap[currStat->getName()]) {
             double newCost = currCost + tW * currRoute->getDuration() + pW * currRoute->getPrice();
-            auto occupiedSeats = currRoute->getTransport()->getAllFreeSeats(currRoute->getRouteId());
-            if ((int) occupiedSeats.size() < neededSeats) {
+            if (currRoute->getTransport()->getTransportId() != currTransportID) {
+                currSeats = 0;
+            }
+            bitset<Config::MAX_SEATS> seatsToUpdate = currRoute->getTransport()->getOccupiedSeats(currRoute->getRouteId());
+            currSeats |= seatsToUpdate;
+            if (currRoute->getTransport()->getTotalSeats() - (int) currSeats.count() < neededSeats) {
                 continue;
             }
             if (!preferredTransport.empty()) {
@@ -48,7 +68,8 @@ Journey *Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, Wor
                 prevStation[nextID] = {currStat->getStationId(), currRoute};
                 bestCost[nextID] = newCost;
             }
-            minCost.insert({bestCost[nextID], currRoute->getDestination()});
+            TravelInfo newInfo(bestCost[nextID], currSeats, currRoute->getTransport()->getTransportId(), currRoute->getDestination());
+            minCost.insert(newInfo);
         }
     }
     if (ans < 0) {
@@ -62,17 +83,33 @@ Journey *Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, Wor
         currID = prevStation[currID].first;
     }
     reverse(optimalRoute.begin(), optimalRoute.end());
-    for (const auto currRoute : optimalRoute) {
-        auto currTicket = new Ticket();
-        currTicket->updateTicket(currRoute, neededSeats);
-        auto freeSeats = currRoute->getTransport()->getAllFreeSeats(currRoute->getRouteId());
+    int sz = (int) optimalRoute.size();
+    for (int i = 0; i < sz; ++i) {
+        const auto currRoute = optimalRoute[i];
+        int currTransportID = currRoute->getTransport()->getTransportId(), j = i, totalDuration = 0;
+        double totalPrice = 0;
+        bitset<Config::MAX_SEATS> occupiedSeats;
+        while (j < sz and optimalRoute[j]->getTransport()->getTransportId() == currTransportID) {
+            totalPrice += optimalRoute[j]->getPrice();
+            totalDuration += optimalRoute[j]->getDuration();
+            occupiedSeats |= optimalRoute[j]->getTransport()->getOccupiedSeats(optimalRoute[j]->getRouteId());
+            j++;
+        }
+        j--;
+        auto currTicket = new Ticket(totalPrice, optimalRoute[i]->getOrigin(), optimalRoute[j]->getDestination(), totalDuration);
+        vector<int> freeSeats;
+        for (int s = 0; s < currRoute->getTransport()->getTotalSeats(); ++s) {
+            if (!occupiedSeats[s]) {
+                freeSeats.push_back(s);
+            }
+        }
         std::cout << "Choose the seat(s): ";
         for (int freeSeat : freeSeats) {
             std::cout << freeSeat << ' ';
         }
         std::cout << '\n';
         std::vector<int> seatsToOccupy;
-        for (int i = 0; i < neededSeats; ++i) {
+        for (int _ = 0; _ < neededSeats; ++_) {
             int x;
             cout << "Enter the seat number: \n";
             cin >> x;
@@ -83,6 +120,7 @@ Journey *Customer<T1>::buyTicket(const Station *stat1, const Station *stat2, Wor
         currRoute->getTransport()->occupySeats(seatsToOccupy, currRoute->getRouteId());
         currTicket->setSeats(seatsToOccupy);
         *journey += currTicket;
+        i = j;
     }
     return journey;
 }

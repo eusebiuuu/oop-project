@@ -3,10 +3,15 @@
 
 #include "vector"
 #include "string"
-
+#include "bitset"
+#include "config.h"
 
 class Transportation {
     static int transportCount;
+public:
+    int getTotalSeats() const;
+
+private:
     double price;
     int totalSeats, transportID;
     std::string type, model;
@@ -24,7 +29,7 @@ public:
 
     void occupySeats(const std::vector<int> &, const int &);
 
-    [[nodiscard]] std::vector<int> getAllFreeSeats(const int &) const;
+    [[nodiscard]] std::bitset<Config::MAX_SEATS> getOccupiedSeats(int) const;
 
     [[nodiscard]] double getPrice() const;
 

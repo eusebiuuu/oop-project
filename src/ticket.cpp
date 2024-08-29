@@ -49,10 +49,3 @@ int Ticket::getTicketId() const {
 void Ticket::setSeats(const std::vector<int> &s) {
     Ticket::seats = s;
 }
-
-void Ticket::updateTicket(const Route *r, const int &s) {
-    this->origin = r->getOrigin();
-    this->destination = r->getDestination();
-    this->duration = r->getDuration();
-    this->totalPrice = r->getPrice() * s;
-}

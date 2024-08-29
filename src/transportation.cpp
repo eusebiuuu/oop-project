@@ -1,7 +1,6 @@
 #include "transportation.h"
 #include "checker.h"
 #include "iostream"
-#include "config.h"
 #include "algorithm"
 
 int Transportation::transportCount = 0;
@@ -14,21 +13,6 @@ void Transportation::occupySeats(const std::vector<int> &seatsToBeOccupied, cons
     for (auto seat : seatsToBeOccupied) {
         this->seatsState[seat].push_back(currRoute);
     }
-}
-
-std::vector<int> Transportation::getAllFreeSeats(const int &currRoute) const {
-    std::vector<int> freeSeats;
-    for (int i = 0; i < this->totalSeats; ++i) {
-        if (seatsState[i].empty()) {
-            freeSeats.push_back(i);
-            continue;
-        }
-        auto iter = std::find(seatsState[i].begin(), seatsState[i].end(), currRoute);
-        if (iter == seatsState[i].end()) {
-            freeSeats.push_back(i);
-        }
-    }
-    return freeSeats;
 }
 
 void Transportation::read(std::istream &in) {
@@ -90,4 +74,22 @@ const std::string &Transportation::getType() const {
 
 int Transportation::getTransportId() const {
     return transportID;
+}
+
+std::bitset<Config::MAX_SEATS> Transportation::getOccupiedSeats(int currRoute) const {
+    std::bitset<Config::MAX_SEATS> occupiedSeats;
+    for (int i = 0; i < this->totalSeats; ++i) {
+        if (seatsState[i].empty()) {
+            continue;
+        }
+        auto iter = std::find(seatsState[i].begin(), seatsState[i].end(), currRoute);
+        if (iter != seatsState[i].end()) {
+            occupiedSeats[i] = true;
+        }
+    }
+    return occupiedSeats;
+}
+
+int Transportation::getTotalSeats() const {
+    return totalSeats;
 }

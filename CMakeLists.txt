@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.22)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing executable name in this file
 # for now, the project name is used as the executable name
-project(oop)
+project(runner)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -114,6 +114,7 @@ add_executable(${PROJECT_NAME} main.cpp ${SOURCES}
         src/world.cpp
         include/config.h
         include/journey.h
+        main.cpp
 )
 
 ###############################################################################

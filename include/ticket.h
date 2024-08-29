@@ -13,6 +13,8 @@ class Ticket {
 public:
     Ticket(): totalPrice(0), seats({}), origin(), destination(), ticketID(ticketsCount++), duration(0) {}
 
+    Ticket(double t, Station *s1, Station *s2, int d): totalPrice(t), origin(s1), destination(s2), ticketID(ticketsCount++), duration(d) {}
+
     [[nodiscard]] double getTotalPrice() const;
 
     friend std::ostream& operator<<(std::ostream &, const Ticket *);
@@ -28,8 +30,6 @@ public:
     [[nodiscard]] Station *getDestination() const;
 
     [[nodiscard]] int getTicketId() const;
-
-    void updateTicket(const Route *, const int &);
 
     void setSeats(const std::vector<int> &);
 };
